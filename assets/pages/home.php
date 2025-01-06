@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: /index.html");
+    exit();
+}
+
+
+$nomeUsuario = $_SESSION['email']; 
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,7 +22,7 @@
 </head>
 <body>
     <div class="sidebar">
-        <a href="/assets/pages/home.html"><h2>Adez Gestão</h2></a>
+        <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
         <ul id="submenu-rh">
             <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.html">Cadastro de Novo Funcionário</a></li>
@@ -20,7 +33,11 @@
             <li><a class="sidemenu" href="/assets/pages/relatorio.html">Relatórios</a></li>
             <li><a class="sidemenu" href="/assets/pages/despesas.html">Despesas</a></li>
         </ul>
-        <a class="sidemenu" href="/logout">Logout</a>
+        <a class="sidemenu" href="/logout.php">Logout</a>
+
+        <div class="logged-user">
+            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        </div>
     </div>
 
     <div class="content">
