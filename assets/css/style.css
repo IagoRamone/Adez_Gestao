@@ -5,14 +5,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    min-height: 100vh;
-    background-color:white;
-    color: #fff;
-}
 h1{
     color: black;
     font-family: "Exo 2";
@@ -20,111 +12,58 @@ h1{
     text-align: center;
     font-size:50px;
 }
-
-.sidebar {
-    width: 250px;
-    background-color: #000;
-    padding: 20px;
+a{
+    text-decoration: none;
+    color: blue;
+}
+body {
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
 }
 
-.sidebar h2 {
-    color: #fdd028;
-    margin-bottom: 20px;
-    font-size: 24px;
+.login-container {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
-.sidebar a {
-    color: #fff;
-    text-decoration: none;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.sidebar a:hover {
-    background-color: #fdd028;
-    color: #000;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    display: none;
-}
-
-.sidebar ul li.active {
-    display: block;
-}
-
-.sidebar ul a {
-    text-decoration: none;
-    color: white;
-    padding: 10px;
-    display: block;
-    cursor: pointer;
-}
-
-.sidebar ul a:hover {
-    background: #fdd028;
-    color: black;
-}
-
-.sidebar a {
-    cursor: pointer;
-}
-
-.form-container h2 {
+.login-container h1 {
     text-align: center;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-}
-
-.form-container {
-    background-color: whitesmoke;
-    padding: 20px;
-    border: black solid 1px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.form-container h2 {
-    color: #fdd028;
     margin-bottom: 20px;
 }
 
-.form-container label {
+.login-container label {
     display: block;
-    font-family: "Poppins";
-    font-weight: 500;
-    margin-bottom: 10px;
-    color: black;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-.form-container input, .form-container select, .form-container button {
+.login-container input {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.form-container button {
-    background-color: #fdd028;
-    color: #000;
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
     border: none;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.form-container button:hover {
-    background-color: #e6b800;
+.login-container button:hover {
+    background-color: #0056b3;
 }

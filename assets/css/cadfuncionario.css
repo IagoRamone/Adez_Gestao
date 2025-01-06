@@ -20,12 +20,12 @@ h1{
     text-align: center;
     font-size:50px;
 }
-p{
-    color: black;
-}
+/*Estilização dos links*/
 a{
     text-decoration: none;
+    cursor: pointer;
 }
+/*Sidebar*/
 
 .sidebar {
     background-color: #000;
@@ -86,41 +86,44 @@ a{
     padding: 20px;
 }
 
-#cadastro{
-    border: solid black 1px;
+.form-container {
+    background-color: whitesmoke;
+    padding: 20px;
+    border: black solid 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-.employee-info {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    text-align: left;
-}
-
-.employee-info img {
-    width: 200px;
-    align-items: center;
-    height: 200px;
-    margin-top: 20px;
-    margin-left: 400px;
-    border-radius: 50%;
-    border: 5px solid #ccc;
-    padding: 5px;
+.form-container h2 {
+    color: #fdd028;
     margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.employee-info p {
-    font-size: 18px;
-    margin: 10px 0;
-    margin-left: 10px;
+.form-container label {
+    display: block;
+    font-family: "Poppins";
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: black;
 }
 
-.employee-info .details {
-    max-width: 600px;
+.form-container input, .form-container select, .form-container button {
     width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
-.placeholder {
-    color: #888;
+.form-container button {
+    background-color: #fdd028;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #e6b800;
 }
