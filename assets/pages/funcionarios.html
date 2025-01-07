@@ -26,23 +26,30 @@
     <div class="content">
         <h1>Detalhes do Funcionário</h1>
         <br>
+        <div id="search-container">
+            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome">
+            <button onclick="searchEmployee()">Pesquisar</button>
+        </div>
+        <br>
+    
         <div id="cadastro" class="employee-info">
-            <img src="/assets/images/placeholder.png" alt="Foto do Funcionário">
+            <img id="employee-photo" src="/assets/images/placeholder.png" alt="Foto do Funcionário">
             <div class="details">
-                <p><strong>Nome:</strong> <span class="placeholder">[Nome do Funcionário]</span></p>
+                <p><strong>Nome:</strong> <span id="employee-name" class="placeholder">[Nome do Funcionário]</span></p>
                 <br>
-                <p><strong>Email:</strong> <span class="placeholder">[Email do Funcionário]</span></p>
+                <p><strong>Email:</strong> <span id="employee-email" class="placeholder">[Email do Funcionário]</span></p>
                 <br>
-                <p><strong>CPF:</strong> <span class="placeholder">[CPF do Funcionário]</span></p>
+                <p><strong>CPF:</strong> <span id="employee-cpf" class="placeholder">[CPF do Funcionário]</span></p>
                 <br>
-                <p><strong>Cargo/Tipo:</strong> <span class="placeholder">[Cargo ou Tipo]</span></p>
+                <p><strong>Cargo/Tipo:</strong> <span id="employee-role" class="placeholder">[Cargo ou Tipo]</span></p>
                 <br>
-                <p><strong>Endereço:</strong> <span class="placeholder">[Endereço do Funcionário]</span></p>
+                <p><strong>Endereço:</strong> <span id="employee-address" class="placeholder">[Endereço do Funcionário]</span></p>
                 <br>
-                <p><strong>Telefone:</strong> <span class="placeholder">[Telefone do Funcionário]</span></p>
+                <p><strong>Telefone:</strong> <span id="employee-phone" class="placeholder">[Telefone do Funcionário]</span></p>
             </div>
         </div>
     </div>
+    <scripts src="/assets/js/buscar.js" > </scripts>
     <script src="/assets/js/script.js"></script>
 </body>
 </html>
