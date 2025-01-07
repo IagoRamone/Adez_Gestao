@@ -27,9 +27,9 @@
         <h1>Detalhes do Funcionário</h1>
         <br>
         <div id="search-container">
-            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome">
-            <button onclick="searchEmployee()">Pesquisar</button>
-        </div>
+            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome" oninput="filterSuggestions()">
+            <div id="suggestions"></div>
+        </div>        
         <br>
     
         <div id="cadastro" class="employee-info">

@@ -25,6 +25,7 @@ a{
     text-decoration: none;
     cursor: pointer;
 }
+
 /*Sidebar*/
 .sidebar {
     background-color: #000;
@@ -35,7 +36,9 @@ a{
     display: flex;
     flex-direction: column;
     gap: 15px;
-} 
+    height: 100vh; 
+    justify-content: space-between; 
+}
 
 .sidebar h2 {
     color: #fff;
@@ -78,6 +81,14 @@ a{
     background-color: #fdd028;
     color: #000;
 }
+
+.logged-user {
+    margin-top: auto; 
+    text-align: center; 
+    padding-top: 20px;
+    border-top: 1px solid #444; 
+}
+
 /*Fim do sidebar*/
 
 .content {

@@ -2,13 +2,12 @@
 
 session_start();
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['nome'])) {
     header("Location: /index.html");
     exit();
 }
 
-
-$nomeUsuario = $_SESSION['email']; 
+$nomeUsuario = $_SESSION['nome'];
 ?>
 
 <!DOCTYPE html>
@@ -33,12 +32,13 @@ $nomeUsuario = $_SESSION['email'];
             <li><a class="sidemenu" href="/assets/pages/relatorio.html">Relatórios</a></li>
             <li><a class="sidemenu" href="/assets/pages/despesas.html">Despesas</a></li>
         </ul>
-        <a class="sidemenu" href="/logout.php">Logout</a>
+        <a class="sidemenu" href="../php/logout.php">Logout</a>
 
         <div class="logged-user">
             <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
         </div>
     </div>
+
 
     <div class="content">
         <h1>Bem-vindo à Adez Gestão</h1>
