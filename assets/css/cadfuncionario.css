@@ -109,6 +109,7 @@ a{
 
 .form-container input, .form-container select, .form-container button {
     width: 100%;
+    color: black;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #333;
@@ -126,4 +127,9 @@ a{
 
 .form-container button:hover {
     background-color: #e6b800;
+}
+#btn{
+    font-family: "poppins";
+    font-weight: 400;
+    font-size: 20px;
 }

@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pis = mysqli_real_escape_string($conn, $_POST['pis']);
 
     $photoPath = null;
+
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         $uploadDir = '../uploads/funcionarios/';
         $photoName = uniqid() . "_" . basename($_FILES['photo']['name']);
@@ -38,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Tratamento para o upload do anexo
     $anexoPath = null;
     if (isset($_FILES['anexo']) && $_FILES['anexo']['error'] == 0) {
         $uploadDir = '/var/www/uploads/employees/';

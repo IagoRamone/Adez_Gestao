@@ -28,7 +28,7 @@
         <br>
         <div id="cadastro" class="form-container">
             <h2>Cadastro de Novo Funcionário</h2>
-            <form>
+            <form action="/assets/php/cadastro.php" method="post">
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>
             
@@ -65,7 +65,7 @@
                 <label for="anexo">Anexo</label>
                 <input type="file" id="anexo" name="anexo" accept="image/*"> 
             
-                <button type="submit">Cadastrar</button>
+                <button type="submit" id="btn">Cadastrar</button>
             </form>
         </div>
     </div>

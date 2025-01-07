@@ -1,3 +1,9 @@
+document.getElementById('search-bar').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        searchEmployee(); 
+    }
+});
+
 function searchEmployee() {
     const searchBar = document.getElementById('search-bar');
     const name = searchBar.value;
@@ -6,8 +12,8 @@ function searchEmployee() {
         alert('Por favor, insira um nome para pesquisar.');
         return;
     }
-
-    fetch(`/funcionario.php?name=${encodeURIComponent(name)}`)
+    
+    fetch(`../php/funcionarios.php?query=${encodeURIComponent(name)}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {

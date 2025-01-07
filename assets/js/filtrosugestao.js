@@ -6,7 +6,7 @@ async function filterSuggestions() {
     suggestions.innerHTML = ''; 
 
     if (query) {
-        const response = await fetch(`../php/search_employees.php?query=${query}`);
+        const response = await fetch(`../php/funvionarios.php?query=${query}`);
         const matches = await response.json();
 
         if (matches.length > 0) {

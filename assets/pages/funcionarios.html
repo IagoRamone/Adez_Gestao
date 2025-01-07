@@ -15,7 +15,7 @@
             <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.html">Cadastro de Novo Funcionário</a></li>
             <li><a class="sidemenu" href="/assets/pages/funcionarios.html">Funcionários</a></li>
         </ul>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')" >Financeiro</a>
+        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
         <ul id="submenu-finan">
             <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.html">Cadastro de Novo Funcionário</a></li>
             <li><a class="sidemenu" href="/assets/pages/funcionarios.html">Funcionários</a></li>
@@ -27,9 +27,12 @@
         <h1>Detalhes do Funcionário</h1>
         <br>
         <div id="search-container">
-            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome" oninput="filterSuggestions()">
+            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome">
+            <button onclick="searchEmployee()">
+                <i class="fas fa-search"></i>
+            </button>
             <div id="suggestions"></div>
-        </div>        
+        </div>       
         <br>
     
         <div id="cadastro" class="employee-info">
@@ -41,15 +44,23 @@
                 <br>
                 <p><strong>CPF:</strong> <span id="employee-cpf" class="placeholder">[CPF do Funcionário]</span></p>
                 <br>
-                <p><strong>Cargo/Tipo:</strong> <span id="employee-role" class="placeholder">[Cargo ou Tipo]</span></p>
+                <p><strong>Data de Nascimento:</strong> <span id="employee-dob" class="placeholder">[Data de Nascimento]</span></p>
                 <br>
                 <p><strong>Endereço:</strong> <span id="employee-address" class="placeholder">[Endereço do Funcionário]</span></p>
                 <br>
                 <p><strong>Telefone:</strong> <span id="employee-phone" class="placeholder">[Telefone do Funcionário]</span></p>
+                <br>
+                <p><strong>Data de Admissão:</strong> <span id="employee-admission" class="placeholder">[Data de Admissão]</span></p>
+                <br>
+                <p><strong>Cargo/Tipo:</strong> <span id="employee-role" class="placeholder">[Cargo ou Tipo]</span></p>
+                <br>
+                <p><strong>PIS:</strong> <span id="employee-pis" class="placeholder">[Número do PIS]</span></p>
+                <br>
             </div>
         </div>
     </div>
-    <scripts src="/assets/js/buscar.js" > </scripts>
+    <script src="/assets/js/buscar.js"></script>
+    <script src="/assets/js/filtrosugestao.js"></script>
     <script src="/assets/js/script.js"></script>
 </body>
 </html>
