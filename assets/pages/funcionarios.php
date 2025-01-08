@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['nome'])) {
+    header("Location: /index.html");
+    exit();
+}
+
+$nomeUsuario = $_SESSION['nome'];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -12,15 +24,19 @@
         <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
         <ul id="submenu-rh">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.html">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.html">Funcionários</a></li>
+            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Funcionários</a></li>
         </ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
         <ul id="submenu-finan">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.html">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.html">Funcionários</a></li>
+            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Funcionários</a></li>
         </ul>
-        <a class="sidemenu" href="/logout">Logout</a>
+        <a class="sidemenu" href="../php/logout.php">Logout</a>
+
+        <div class="logged-user">
+            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        </div>
     </div>
 
     <div class="content">
