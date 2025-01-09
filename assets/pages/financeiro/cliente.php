@@ -32,7 +32,7 @@ $nomeUsuario = $_SESSION['nome'];
             <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novos Clientes</a></li>
             <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
-        <a class="sidemenu" href="../php/logout.php">Logout</a>
+        <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
         <div class="logged-user">
             <p>Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?> </p>
         </div>
