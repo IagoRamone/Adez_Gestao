@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background-color:white;
+    color: #fff;
+}
+h1{
+    color: black;
+    font-family: "Exo 2";
+    font-weight: 400;
+    text-align: center;
+    font-size:50px;
+}
+/*Estilização dos links*/
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+/*Sidebar*/
+
+.sidebar {
+    background-color: #000;
+    color: white;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+} 
+
+.sidebar h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 20px;
+    display: none; 
+}
+
+.sidebar ul.active {
+    display: block; 
+}
+
+.sidebar ul li {
+    margin: 5px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    font-size: 14px;
+}
+
+.sidebar ul li a:hover {
+    color: black;
+}
+
+.sidemenu:hover {
+    background-color: #fdd028;
+    color: #000;
+}
+
+.logged-user {
+    margin-top: auto; 
+    text-align: center; 
+    padding-top: 20px;
+    border-top: 1px solid #444; 
+}
+
+/*Fim do sidebar*/
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: whitesmoke;
+    padding: 20px;
+    border: black solid 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.form-container h2 {
+    color: #fdd028;
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    font-family: "Poppins";
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.form-container input, .form-container select, .form-container button {
+    width: 100%;
+    color: black;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-container button {
+    background-color: #fdd028;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #e6b800;
+}
+.principal{
+    font-size: 20px;
+}
+#btn{
+    font-family: "poppins";
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.checkbox-container {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px;
+    margin-bottom: 15px; 
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-container .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fdd028;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark {
+    background-color: #fdd028;
+    border-color: #fdd028;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
