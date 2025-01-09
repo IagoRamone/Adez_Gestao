@@ -93,44 +93,96 @@ a{
     flex: 1;
     padding: 20px;
 }
-
 .form-container {
-    background-color: whitesmoke;
+    width: 800px;
+    max-width: 100;
+    background-color: #fff;
     padding: 20px;
-    border: black solid 1px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    margin: 0 auto;
+    border-radius: 8px;
+    border: solid black 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h2 {
-    color: #fdd028;
+    color: #f0a500;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .form-container label {
     display: block;
-    font-family: "Poppins";
     font-weight: 500;
-    margin-bottom: 10px;
-    color: black;
+    margin-bottom: 8px;
+    color: #333;
 }
 
-.form-container input, .form-container select, .form-container button {
+.form-container input,
+.form-container select,
+.form-container button {
     width: 100%;
-    color: black;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 15px;
-    border: 1px solid #333;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
 .form-container button {
-    background-color: #fdd028;
-    color: #000;
-    border: none;
+    background-color: #f0a500;
+    color: #fff;
+    font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #bd8200;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-container .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f0a500;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 8px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark {
+    background-color: #f0a500;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkmark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    transform: translate(-50%, -50%);
 }
 
 .form-container button:hover {

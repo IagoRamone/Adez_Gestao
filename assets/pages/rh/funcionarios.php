@@ -24,13 +24,13 @@ $nomeUsuario = $_SESSION['nome'];
         <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
         <ul id="submenu-rh">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Funcionários</a></li>
+            <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+            <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
         </ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
         <ul id="submenu-finan">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Funcionários</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novo clientes</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
         <a class="sidemenu" href="../php/logout.php">Logout</a>
 

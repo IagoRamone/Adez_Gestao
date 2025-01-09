@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['nome'])) {
+    header("Location: /index.html");
+    exit();
+}
+
+$nomeUsuario = $_SESSION['nome'];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,175 +19,23 @@
     <link rel="stylesheet" href="/assets/css/cadcliente.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <script src="https://unpkg.com/imask"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Poppins:wght@400;500;600&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', Arial, sans-serif;
-            display: flex;
-            min-height: 100vh;
-            background-color: #e3e3e3;
-            color: #333;
-        }
-
-        .sidebar {
-            background-color: #000;
-            color: white;
-            width: 250px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .sidebar h2 {
-            color: #fff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding-left: 20px;
-            display: none;
-        }
-
-        .sidebar ul.active {
-            display: block;
-        }
-
-        .sidebar .logged-user {
-            margin-top: auto;
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .form-container {
-            max-width: 600px;
-            background-color: #fff;
-            padding: 20px;
-            margin: 0 auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-container h2 {
-            color: #f0a500;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .form-container label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .form-container input,
-        .form-container select,
-        .form-container button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .form-container button {
-            background-color: #f0a500;
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .form-container button:hover {
-            background-color: #bd8200;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            display: none;
-        }
-
-        .checkbox-container .checkmark {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #f0a500;
-            border-radius: 4px;
-            display: inline-block;
-            margin-right: 8px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .checkbox-container input[type="checkbox"]:checked + .checkmark {
-            background-color: #f0a500;
-        }
-
-        .checkbox-container input[type="checkbox"]:checked + .checkmark::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 10px;
-            height: 10px;
-            background-color: white;
-            transform: translate(-50%, -50%);
-        }
-    </style>
 </head>
 <body>
     <div class="sidebar">
         <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
         <ul id="submenu-rh">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Funcionários</a></li>
+            <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+            <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
         </ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
         <ul id="submenu-finan">
-            <li><a class="sidemenu" href="/assets/pages/cadfuncionarios.php">Cadastro de Novos Clientes</a></li>
-            <li><a class="sidemenu" href="/assets/pages/funcionarios.php">Clientes</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novos Clientes</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
         <a class="sidemenu" href="../php/logout.php">Logout</a>
         <div class="logged-user">
-            <p>Bem-vindo, <!-- <?php echo htmlspecialchars($nomeUsuario); ?> --></p>
+            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?> </p>
         </div>
     </div>
     <div class="content">
@@ -244,13 +104,12 @@
             </form>
         </div>
     </div>
-    
+    <script src="/assets/js/script.js"></script>
     <script>
-        // Aplicação das máscaras
         IMask(document.getElementById('cnpj'), { mask: '00.000.000/0000-00' });
     
         IMask(document.getElementById('telefone'), { 
             mask: '(00) 00000-0000',
-            lazy: false 
+            
         });
     </script>
