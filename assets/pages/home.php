@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['nome'])) {
-    header("Location: /index.html");
+    header("Location: /index.php");
     exit();
 }
 
@@ -20,24 +20,28 @@ $nomeUsuario = $_SESSION['nome'];
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
 </head>
 <body>
-    <div class="sidebar">
-        <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
-        <ul id="submenu-rh">
-            <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
-        </ul>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
-        <ul id="submenu-finan">
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
-        </ul>
-        <a class="sidemenu" href="../php/logout.php">Logout</a>
+<div class="sidebar" id="sidebar">
+    <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
+    <ul id="submenu-rh">
+        <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+        <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
+    </ul>
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
+    <ul id="submenu-finan">
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+    </ul>
+    <a class="sidemenu" href="../php/logout.php">Logout</a>
 
-        <div class="logged-user">
-            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
-        </div>
+    <div class="logged-user">
+        <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
+</div>
+
+
+<button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
 
 
     <div class="content">

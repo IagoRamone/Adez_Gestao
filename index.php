@@ -27,7 +27,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="nome" name="nome" placeholder="Email">
+						<input class="input100" type="text" name="nome" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -41,6 +41,12 @@
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
+
+					<?php if (!empty($error_message)): ?>
+					<div class="alert alert-danger" style="text-align: center; margin-bottom: 15px;">
+    				<?php echo $error_message; ?>
+					</div>
+					<?php endif; ?>
 					
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn" type="submit">
@@ -59,7 +65,6 @@
 		</div>
 	</div>
 	
-		
 	<script src="/assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="/assets/vendor/bootstrap/js/popper.js"></script>
 	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>

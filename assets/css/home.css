@@ -150,3 +150,50 @@ a{
 .alerts h4 {
     margin: 0 0 5px;
 }
+
+
+/* Menu toggle */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.active ~ .content {
+        margin-left: 250px;
+    }
+}

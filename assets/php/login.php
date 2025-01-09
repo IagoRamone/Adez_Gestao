@@ -8,10 +8,11 @@ $password = '/7Sn#;|#&*H';
 
 $conn = new mysqli($host, $username, $password, $dbname);
 
-
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
+
+$error_message = ''; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $_POST['nome'];
@@ -39,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: /assets/pages/home.php");
             exit;
         } else {
-            echo "Senha incorreta!";
+            $error_message = 'Senha ou email incorretos!';
         }
     } else {
-        echo "Usuário não encontrado!";
+        $error_message = 'Senha ou email incorretos!';
     }
 }
 
