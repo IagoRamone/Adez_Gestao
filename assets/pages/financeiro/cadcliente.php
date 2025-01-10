@@ -16,7 +16,7 @@ $nomeUsuario = $_SESSION['nome'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adez Gestão</title>
-    <link rel="stylesheet" href="/assets/css/cadcliente.css">
+    <link rel="stylesheet" href="/assets/css/financeiro/cadcliente.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <script src="https://unpkg.com/imask"></script>
 </head>
@@ -31,6 +31,12 @@ $nomeUsuario = $_SESSION['nome'];
         <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
         <ul id="submenu-finan">
             <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novos Clientes</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+        </ul>
+
+        <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">TI</a>
+        <ul id="submenu-ti">
+            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.html">Equipamentos</a></li>
             <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
         <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
