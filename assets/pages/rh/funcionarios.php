@@ -34,7 +34,7 @@ $nomeUsuario = $_SESSION['nome'];
         </ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">TI</a>
         <ul id="submenu-ti">
-            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.html">Equipamentos</a></li>
+            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
             <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
         <a class="sidemenu" href="/assets/php/logout.php">Logout</a>

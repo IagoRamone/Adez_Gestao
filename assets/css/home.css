@@ -25,6 +25,9 @@ a{
     text-decoration: none;
     cursor: pointer;
 }
+p{
+    color: black;
+}
 
 /*Sidebar*/
 .sidebar {
@@ -165,6 +168,54 @@ a{
     padding: 10px;
     border-radius: 5px;
     z-index: 1000;
+}
+/* Container dos cards */
+.squads-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.squad-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.squad-card:hover  {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+.squad-card:hover h3 {
+    color: #fdd028;
+}
+
+.squad-card h3 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: black;
+}
+
+
+.squad-card p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .squad-card {
+        width: 100%;
+    }
 }
 
 

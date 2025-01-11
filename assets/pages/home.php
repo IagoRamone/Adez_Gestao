@@ -8,7 +8,7 @@ if (!isset($_SESSION['nome'])) {
 }
 
 $nomeUsuario = $_SESSION['nome'];
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,17 +32,20 @@ $nomeUsuario = $_SESSION['nome'];
         <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">Ti</a>
+    <ul id="submenu-ti">
+            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
+            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+    </ul>
     <a class="sidemenu" href="../php/logout.php">Logout</a>
 
     <div class="logged-user">
-        <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        <p>Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
 
 
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-
-
 
     <div class="content">
         <h1>Bem-vindo à Adez Gestão</h1>
@@ -69,6 +72,33 @@ $nomeUsuario = $_SESSION['nome'];
             <h3>Gráficos</h3>
             <div class="chart">Gráfico de Faturamento (em breve)</div>
         </div>
+
+        <h1>Squads</h1>
+    <div class="squads-container">
+
+        <a href="/assets/pages/squads/squad1.html" class="squad-card">
+            <h3>Squad 1</h3>
+            <p>Responsável pelo desenvolvimento de novas funcionalidades.</p>
+        </a>
+
+        <a href="/assets/pages/squads/squad2.html" class="squad-card">
+            <h3>Squad 2</h3>
+            <p>Focado na manutenção e correção de bugs.</p>
+        </a>
+
+        <a href="/assets/pages/squads/squad3.html" class="squad-card">
+            <h3>Squad 3</h3>
+            <p>Especializado em infraestrutura e DevOps.</p>
+        </a>
+        <a href="/assets/pages/squads/squad5.html" class="squad-card">
+            <h3>Squad 5</h3>
+            <p>Especializado em infraestrutura e DevOps.</p>
+        </a>
+        <a href="/assets/pages/squads/squadx.html" class="squad-card">
+            <h3>Squad X</h3>
+            <p>Especializado em infraestrutura e DevOps.</p>
+        </a>
+    </div>
     </div>
 
     <script>

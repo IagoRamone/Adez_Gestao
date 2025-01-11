@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+if (!isset($_SESSION['nome'])) {
+    header("Location: /index.php");
+    exit();
+}
+
+$nomeUsuario = $_SESSION['nome'];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -22,13 +34,13 @@
         </ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">TI</a>
         <ul id="submenu-ti">
-            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.html">Equipamentos</a></li>
+            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
             <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
         </ul>
         <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
 
         <div class="logged-user">
-            <p>Bem-vindo, <!-- <?php echo htmlspecialchars($nomeUsuario); ?> --></p>
+            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?> </p>
         </div>
     </div>
 
