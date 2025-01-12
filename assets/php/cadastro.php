@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Funcionário cadastrado com sucesso!";
-        header("Location: /assets/pages/funcionarios.html");
+        header("Location: /assets/pages/rh/funcionarios.php");
         exit;
     } else {
         echo "Erro ao cadastrar funcionário: " . $conn->error;

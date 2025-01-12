@@ -40,7 +40,7 @@ $nomeUsuario = $_SESSION['nome'];
     <a class="sidemenu" href="../php/logout.php">Logout</a>
 
     <div class="logged-user">
-        <p>Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        <p id="use">Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
 

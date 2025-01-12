@@ -28,6 +28,9 @@ a{
 p{
     color: black;
 }
+#user{
+    color: white;
+}
 
 /*Sidebar*/
 .sidebar {
