@@ -166,3 +166,6 @@ a{
 #suggestions div:hover {
     background-color: #f0f0f0;
 }
+td,th{
+    color: black;
+}

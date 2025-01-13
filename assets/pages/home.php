@@ -40,10 +40,9 @@ $nomeUsuario = $_SESSION['nome'];
     <a class="sidemenu" href="../php/logout.php">Logout</a>
 
     <div class="logged-user">
-        <p id="use">Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        <p id="user">Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
-
 
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 
@@ -85,7 +84,6 @@ $nomeUsuario = $_SESSION['nome'];
             <h3>Squad 2</h3>
             <p>Focado na manutenção e correção de bugs.</p>
         </a>
-
         <a href="/assets/pages/squads/squad3.html" class="squad-card">
             <h3>Squad 3</h3>
             <p>Especializado em infraestrutura e DevOps.</p>

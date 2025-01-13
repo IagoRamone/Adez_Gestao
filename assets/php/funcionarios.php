@@ -31,7 +31,7 @@ if (isset($_GET['query']) && !empty(trim($_GET['query']))) {
         echo json_encode(['error' => 'Nenhum funcionário encontrado.']);
     }
 } else {
-    echo json_encode(['error' => 'Parâmetro "query" não fornecido ou vazio.']);
+    echo json_encode(['error' => 'Parâmetro "query" não fornecido ou vazio...']);
 }
 
 $conn->close();

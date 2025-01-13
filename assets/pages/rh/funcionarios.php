@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['nome'])) {
@@ -15,23 +14,22 @@ $nomeUsuario = $_SESSION['nome'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adez Gestão</title>
+    <title>Adez Gestão - Funcionários</title>
     <link rel="stylesheet" href="/assets/css/rh/funcionarios.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
 </head>
 <body>
-    <div class="sidebar">
+<div class="sidebar">
         <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
         <ul id="submenu-rh">
             <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
             <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
         </ul>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
+        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')" >Financeiro</a>
         <ul id="submenu-finan">
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novo clientes</a></li>
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
-        </ul>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novo clientes</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li></ul>
         <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">TI</a>
         <ul id="submenu-ti">
             <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
@@ -43,42 +41,78 @@ $nomeUsuario = $_SESSION['nome'];
             <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
         </div>
     </div>
-
     <div class="content">
-        <h1>Detalhes do Funcionário</h1>
-        <br>
+        <h1>Funcionários</h1>
         <div id="search-container">
-            <input type="text" id="search-bar" placeholder="Pesquisar funcionário pelo nome">
-            <button onclick="searchEmployee()">
-                <i class="fas fa-search"></i>
-            </button>
-            <div id="suggestions"></div>
-        </div>       
-        <br>
-    
-        <div id="cadastro" class="employee-info">
-            <img id="employee-photo" src="/assets/images/placeholder.png" alt="Foto do Funcionário">
-            <div class="details">
-                <p><strong>Nome:</strong> <span id="employee-name" class="placeholder">[Nome do Funcionário]</span></p>
-                <br>
-                <p><strong>Email:</strong> <span id="employee-email" class="placeholder">[Email do Funcionário]</span></p>
-                <br>
-                <p><strong>CPF:</strong> <span id="employee-cpf" class="placeholder">[CPF do Funcionário]</span></p>
-                <br>
-                <p><strong>Data de Nascimento:</strong> <span id="employee-dob" class="placeholder">[Data de Nascimento]</span></p>
-                <br>
-                <p><strong>Endereço:</strong> <span id="employee-address" class="placeholder">[Endereço do Funcionário]</span></p>
-                <br>
-                <p><strong>Telefone:</strong> <span id="employee-phone" class="placeholder">[Telefone do Funcionário]</span></p>
-                <br>
-                <p><strong>Data de Admissão:</strong> <span id="employee-admission" class="placeholder">[Data de Admissão]</span></p>
-                <br>
-                <p><strong>Cargo/Tipo:</strong> <span id="employee-role" class="placeholder">[Cargo ou Tipo]</span></p>
-                <br>
-                <p><strong>PIS:</strong> <span id="employee-pis" class="placeholder">[Número do PIS]</span></p>
-                <br>
-            </div>
+            <form method="GET" action="">
+                <input type="text" name="query" placeholder="Pesquisar funcionário pelo nome" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
+                <button type="submit">Pesquisar</button>
+            </form>
         </div>
+        
+        <br>
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Data de Nascimento</th>
+                    <th>Endereço</th>
+                    <th>Telefone</th>
+                    <th>Data de Admissão</th>
+                    <th>Cargo/Tipo</th>
+                    <th>PIS</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $host = '127.0.0.1:3306';
+                $dbname = 'u561882274_adez_gestao';
+                $username = 'u561882274_Iagoramone';
+                $password = '/7Sn#;|#&*H';
+
+                $conn = new mysqli($host, $username, $password, $dbname);
+
+                if ($conn->connect_error) {
+                    echo '<tr><td colspan="10">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
+                    exit;
+                }
+
+                $query = $_GET['query'] ?? '';
+                $query = $conn->real_escape_string(trim($query));
+
+                $sql = "SELECT * FROM funcionarios";
+                if (!empty($query)) {
+                    $sql .= " WHERE name LIKE '%$query%'";
+                }
+
+                $result = $conn->query($sql);
+
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td>' . htmlspecialchars($row['id']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['name']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['email']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['cpf']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['dob']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['address']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['admission_date']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['role']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['pis']) . '</td>';
+                        echo '</tr>';
+                    }
+                } else {
+                    echo '<tr><td colspan="10">Nenhum funcionário encontrado.</td></tr>';
+                }
+
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
     </div>
     <script src="/assets/js/buscar.js"></script>
     <script src="/assets/js/filtrosugestao.js"></script>
