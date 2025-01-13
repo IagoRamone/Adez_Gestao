@@ -49,7 +49,6 @@ $nomeUsuario = $_SESSION['nome'];
                 <button type="submit">Pesquisar</button>
             </form>
         </div>
-        
         <br>
         <table border="1" cellpadding="10">
             <thead>
