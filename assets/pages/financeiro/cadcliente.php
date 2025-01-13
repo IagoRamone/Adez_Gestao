@@ -49,7 +49,7 @@ $nomeUsuario = $_SESSION['nome'];
         <br>
         <div id="cadastro" class="form-container">
             <h2>Cadastro de Novo Cliente</h2>
-            <form action="/assets/php/cadastro.php" method="post">
+            <form action="/assets/php/cliente.php" method="post">
     
                 <label for="name" class="principal">Razão Social</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>
@@ -62,6 +62,9 @@ $nomeUsuario = $_SESSION['nome'];
     
                 <label for="telefone" class="principal">Telefone</label>
                 <input type="text" id="telefone" name="telefone" placeholder="Digite o telefone" required>
+                
+                <label for="telefone" class="principal">Email</label>
+                <input type="text" id="email" name="email" placeholder="Digite o email" required>
     
                 <label for="servicos" class="principal">Serviços</label>
                 <br>
@@ -79,7 +82,15 @@ $nomeUsuario = $_SESSION['nome'];
                         <span class="checkmark"></span>
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" name="servicos[]" value="outros"> Outros
+                        <input type="checkbox" name="servicos[]" value="outros"> Tripadvisor
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="servicos[]" value="outros"> Consultoria
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="servicos[]" value="outros"> GMS
                         <span class="checkmark"></span>
                     </label>
                 </div>
