@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['nome'])) {
@@ -39,7 +38,7 @@ $nomeUsuario = $_SESSION['nome'];
         </ul>
         <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
         <div class="logged-user">
-            <p>Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?> </p>
+            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?></p>
         </div>
     </div>
 
@@ -53,6 +52,7 @@ $nomeUsuario = $_SESSION['nome'];
                         <th>CNPJ</th>
                         <th>Responsável</th>
                         <th>Telefone</th>
+                        <th>Email</th>
                         <th>Serviços</th>
                         <th>Segmento</th>
                         <th>Início do Contrato</th>
@@ -60,20 +60,45 @@ $nomeUsuario = $_SESSION['nome'];
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Exemplo Empresa</td>
-                        <td>00.000.000/0000-00</td>
-                        <td>João da Silva</td>
-                        <td>(11) 99999-9999</td>
-                        <td>Tráfego, GMN</td>
-                        <td>Agência</td>
-                        <td>01/01/2025</td>
-                        <td>12 meses</td>
-                    </tr>
+                    <?php
+                    $host = '127.0.0.1:3306';
+                    $dbname = 'u561882274_adez_gestao';
+                    $username = 'u561882274_Iagoramone';
+                    $password = '/7Sn#;|#&*H';
+
+                    $conn = new mysqli($host, $username, $password, $dbname);
+
+                    if ($conn->connect_error) {
+                        echo '<tr><td colspan="9">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
+                        exit;
+                    }
+
+                    $sql = "SELECT razao_social, cnpj, responsavel, telefone, email, servicos, segmento, inicio_contrato, vigencia FROM cliente";
+                    $result = $conn->query($sql);
+
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($row['razao_social']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['cnpj']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['responsavel']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['telefone']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['email']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['servicos']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['segmento']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['inicio_contrato']) . '</td>';
+                            echo '<td>' . htmlspecialchars($row['vigencia']) . '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="9">Nenhum cliente encontrado.</td></tr>';
+                    }
+
+                    $conn->close();
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
-    <script src="/assets/js/script.js"></script>
 </body>
 </html>
