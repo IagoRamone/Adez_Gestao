@@ -17,6 +17,7 @@ $nomeUsuario = $_SESSION['nome'];
     <title>Adez Gestão - Funcionários</title>
     <link rel="stylesheet" href="/assets/css/rh/funcionarios.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar">
@@ -45,10 +46,13 @@ $nomeUsuario = $_SESSION['nome'];
         <h1>Funcionários</h1>
         <div id="search-container">
             <form method="GET" action="">
-                <input type="text" name="query" placeholder="Pesquisar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
-                <button type="submit">Pesquisar</button>
+                <div class="search-box">
+                <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
+                <input type="text" name="query" class="input-search" placeholder="Procurar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
+                </div>
             </form>
         </div>
+        
         <br>
         <table border="1" cellpadding="10">
             <thead>
@@ -96,10 +100,10 @@ $nomeUsuario = $_SESSION['nome'];
                         echo '<td>' . htmlspecialchars($row['name']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['email']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['cpf']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['data_nascimento']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['dob']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['address']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['data_admissao']) . '</td>';
+                        echo '<td>' . htmlspecialchars($row['admission_date']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['role']) . '</td>';
                         echo '<td>' . htmlspecialchars($row['pis']) . '</td>';
                         echo '</tr>';
