@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['nome'])) {
@@ -48,14 +47,39 @@ if (!isset($_SESSION['nome'])) {
 
     <div class="content">
         <h1>Bem-vindo à Adez Gestão</h1>
-
+        <br>
         <div class="dashboard-section">
             <h3>Resumo Geral</h3>
+            <br>
             <div class="cards-container">
-                <div class="card">
-                    <h4>Total de Funcionários</h4>
-                    <p>150</p>
-                </div>
+            <div class="card">
+    <h4>Total de Funcionários</h4>
+    <p>
+        <?php
+        $host = '127.0.0.1:3306';
+        $dbname = 'u561882274_adez_gestao';
+        $username = 'u561882274_Iagoramone';
+        $password = '/7Sn#;|#&*H';
+        
+        $conn = new mysqli($host, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Falha na conexão: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT COUNT(*) AS total FROM funcionarios";
+        $result = $conn->query($sql);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            echo $row['total'];
+        } else {
+            echo "0";
+        }
+
+        $conn->close();
+        ?>
+    </p>
+</div>
                 <div class="card">
                     <h4>Despesas Mensais</h4>
                     <p>R$ 50.000,00</p>

@@ -13,12 +13,15 @@ body {
     background-color:white;
     color: #fff;
 }
-h1{
+h1 {
     color: black;
     font-family: "Exo 2";
     font-weight: 400;
     text-align: center;
     font-size:50px;
+}
+h3{
+    color: black;
 }
 /*Estilização dos links*/
 a{
@@ -42,7 +45,7 @@ p{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 100vh; 
+    height: 200vh; 
     justify-content: space-between; 
 }
 
@@ -101,7 +104,6 @@ p{
     flex: 1;
     padding: 20px;
 }
-
 
 .dashboard-section {
     margin-bottom: 20px;
@@ -221,7 +223,12 @@ p{
     }
 }
 
+@media (min-width:1200px) and (max-width:1400px){   
+    .squad-card {
+        width: 160px;
+}
 
+}
 @media (max-width: 768px) {
     .sidebar {
         position: fixed;
