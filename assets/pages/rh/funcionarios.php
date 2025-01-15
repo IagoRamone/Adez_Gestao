@@ -21,35 +21,92 @@ $nomeUsuario = $_SESSION['nome'];
     <style>
         /* Estilos do Modal */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-            color:black;
-        }
-        .modal h1{
-            text-align: center;
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 50%;
-            border-radius: 8px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: black;
+    }
+
+    .modal-content {
+        background-color: #f9f9f9;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        width: 60%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .modal-body img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+    }
+
+    .modal-body .info {
+        text-align: left;
+        width: 100%;
+    }
+
+    .modal-body .info p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-close {
+        background-color: #bbb;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-delete:hover {
+        background-color: #c0392b;
+    }
     </style>
 </head>
 <body>
@@ -143,27 +200,37 @@ $nomeUsuario = $_SESSION['nome'];
 
 <div id="modal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h1>Detalhes do Funcionário</h1>
-        <div id="modal-body">
+        <div class="modal-header">
+            <h1>Detalhes do Funcionário</h1>
+        </div>
+
+        <div class="modal-body">
+            <img src="/assets/img/placeholder.jpg" alt="Foto do funcionário">
+
+            <div class="info" id="modal-body-info">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-close" onclick="closeModal()">Fechar</button>
+            <button class="btn-delete" onclick="deleteFuncionario()">Excluir Funcionário</button>
         </div>
     </div>
 </div>
 
 <script>
-
     function showModal(funcionarioId) {
         const modal = document.getElementById('modal');
-        const modalBody = document.getElementById('modal-body');
+        const modalBodyInfo = document.getElementById('modal-body-info');
         modal.style.display = 'block';
 
         fetch(`/assets/php/getFuncionarioDetails.php?id=${funcionarioId}`)
             .then(response => response.text())
             .then(data => {
-                modalBody.innerHTML = data;
+                modalBodyInfo.innerHTML = data;
             })
             .catch(error => {
-                modalBody.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
+                modalBodyInfo.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
             });
     }
 
@@ -171,7 +238,28 @@ $nomeUsuario = $_SESSION['nome'];
         const modal = document.getElementById('modal');
         modal.style.display = 'none';
     }
+
+    function deleteFuncionario() {
+        if (confirm('Tem certeza de que deseja excluir este funcionário?')) {
+            fetch(`/assets/php/deleteFuncionario.php?id=${funcionarioId}`, {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Funcionário excluído com sucesso!');
+                        location.reload();
+                    } else {
+                        alert('Erro ao excluir funcionário.');
+                    }
+                })
+                .catch(error => {
+                    alert('Erro de conexão com o servidor.');
+                });
+        }
+    }
 </script>
+
+
 <script src="/assets/js/buscar.js"></script>
 <script src="/assets/js/filtrosugestao.js"></script>
 <script src="/assets/js/script.js"></script>
