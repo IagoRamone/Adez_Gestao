@@ -21,7 +21,7 @@
 					<img src="/assets/img/Foguete amarelo.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form" action="/assets/php/login.php" method="post">
+				<form class="login100-form validate-form" action="/assets/php/login.php" method="post" >
 					<span class="login100-form-title">
 						Admin Login
 					</span>
@@ -49,7 +49,7 @@
 					<?php endif; ?>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" type="submit">
+						<button class="login100-form-btn"  type="submit">
 							Login
 						</button>
 					</div>
@@ -80,3 +80,4 @@
 
 </body>
 </html>
+

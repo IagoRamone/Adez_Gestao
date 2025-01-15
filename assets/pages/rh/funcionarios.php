@@ -18,6 +18,39 @@ $nomeUsuario = $_SESSION['nome'];
     <link rel="stylesheet" href="/assets/css/rh/funcionarios.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos do Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            color:black;
+        }
+        .modal h1{
+            text-align: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="sidebar">
@@ -42,83 +75,105 @@ $nomeUsuario = $_SESSION['nome'];
             <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
         </div>
     </div>
-    <div class="content">
-        <h1>Funcionários</h1>
-        <div id="search-container">
-            <form method="GET" action="">
-                <div class="search-box">
+</div>
+<div class="content">
+    <h1>Funcionários</h1>
+    <div id="search-container">
+        <form method="GET" action="">
+            <div class="search-box">
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" name="query" class="input-search" placeholder="Procurar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
-                </div>
-            </form>
-        </div>
-        
-        <br>
-        <table border="1" cellpadding="10">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>CPF</th>
-                    <th>Data de Nascimento</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                    <th>Data de Admissão</th>
-                    <th>Cargo/Tipo</th>
-                    <th>PIS</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $host = '127.0.0.1:3306';
-                $dbname = 'u561882274_adez_gestao';
-                $username = 'u561882274_Iagoramone';
-                $password = '/7Sn#;|#&*H';
-
-                $conn = new mysqli($host, $username, $password, $dbname);
-
-                if ($conn->connect_error) {
-                    echo '<tr><td colspan="10">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
-                    exit;
-                }
-
-                $query = $_GET['query'] ?? '';
-                $query = $conn->real_escape_string(trim($query));
-
-                $sql = "SELECT * FROM funcionarios";
-                if (!empty($query)) {
-                    $sql .= " WHERE name LIKE '%$query%'";
-                }
-
-                $result = $conn->query($sql);
-
-                if ($result && $result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($row['id']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['name']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['email']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['cpf']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['data_nascimento']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['address']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['data_admissao']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['role']) . '</td>';
-                        echo '<td>' . htmlspecialchars($row['pis']) . '</td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr><td colspan="10">Nenhum funcionário encontrado.</td></tr>';
-                }
-
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
+            </div>
+        </form>
     </div>
-    <script src="/assets/js/buscar.js"></script>
-    <script src="/assets/js/filtrosugestao.js"></script>
-    <script src="/assets/js/script.js"></script>
+    <br>
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $host = '127.0.0.1:3306';
+            $dbname = 'u561882274_adez_gestao';
+            $username = 'u561882274_Iagoramone';
+            $password = '/7Sn#;|#&*H';
+
+            $conn = new mysqli($host, $username, $password, $dbname);
+
+            if ($conn->connect_error) {
+                echo '<tr><td colspan="5">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
+                exit;
+            }
+
+            $query = $_GET['query'] ?? '';
+            $query = $conn->real_escape_string(trim($query));
+
+            $sql = "SELECT * FROM funcionarios";
+            if (!empty($query)) {
+                $sql .= " WHERE name LIKE '%$query%'";
+            }
+
+            $result = $conn->query($sql);
+
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';                       
+                    echo '<td>' . htmlspecialchars($row['name']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['email']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['cpf']) . '</td>';
+                    echo '<td>' . htmlspecialchars($row['phone']) . '</td>';
+                    echo '<td><button class="btn-info" onclick="showModal(' . htmlspecialchars($row['id']) . ')">Ver mais</button></td>';
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr><td colspan="5">Nenhum funcionário encontrado.</td></tr>';
+            }
+
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h1>Detalhes do Funcionário</h1>
+        <div id="modal-body">
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function showModal(funcionarioId) {
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementById('modal-body');
+        modal.style.display = 'block';
+
+        fetch(`/assets/php/getFuncionarioDetails.php?id=${funcionarioId}`)
+            .then(response => response.text())
+            .then(data => {
+                modalBody.innerHTML = data;
+            })
+            .catch(error => {
+                modalBody.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
+            });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'none';
+    }
+</script>
+<script src="/assets/js/buscar.js"></script>
+<script src="/assets/js/filtrosugestao.js"></script>
+<script src="/assets/js/script.js"></script>
 </body>
 </html>

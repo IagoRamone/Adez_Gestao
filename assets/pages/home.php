@@ -7,7 +7,7 @@ if (!isset($_SESSION['nome'])) {
     exit();
 }
 
-$nomeUsuario = $_SESSION['nome'];
+ $nomeUsuario = $_SESSION['nome'];
 ?> 
 
 <!DOCTYPE html>
