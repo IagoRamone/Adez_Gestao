@@ -40,7 +40,6 @@ if (!isset($_SESSION['nome'])) {
     <a class="sidemenu" href="../php/logout.php">Logout</a>
 
     <div class="logged-user">
-        <p id="user">Bem-vindo,  <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
 
@@ -89,11 +88,9 @@ if (!isset($_SESSION['nome'])) {
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
         <a href="/assets/pages/squads/squad5.html" class="squad-card">
-            <h3>Squad 5</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
         <a href="/assets/pages/squads/squadx.html" class="squad-card">
-            <h3>Squad X</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
     </div>
