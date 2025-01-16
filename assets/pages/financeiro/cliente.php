@@ -43,6 +43,15 @@ $nomeUsuario = $_SESSION['nome'];
     </div>
 
     <div class="content">
+    <h1>Clientes</h1>
+    <div id="search-container">
+        <form method="GET" action="">
+            <div class="search-box">
+                <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
+                <input type="text" name="query" class="input-search" placeholder="Procurar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
+            </div>
+        </form>
+    </div>
         <div class="table-container">
             <h2>Clientes Cadastrados</h2>
             <table>
@@ -101,5 +110,8 @@ $nomeUsuario = $_SESSION['nome'];
         </div>
     </div>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/buscar.js"></script>
+    <script src="/assets/js/filtrosugestao.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
