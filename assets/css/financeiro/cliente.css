@@ -89,39 +89,36 @@ a{
 
 /*Fim do sidebar*/
 
-.table-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+td,th{
+    color: black;
 }
-
-.table-container h2 {
-    color: #f0a500;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
 }
-
-table th, table td {
+thead {
+    background-color: #f4f4f4;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
     text-align: left;
-    padding: 12px;
-    border: 1px solid #ccc;
-    color: black;
 }
-
-table th {
-    background-color: #f0a500;
-    color: #fff;
+th {
+    background-color: #4CAF50;
+    color: white;
 }
-
-table tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #f9f9f9;
-    color: black;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.no-results {
+    text-align: center;
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
 }

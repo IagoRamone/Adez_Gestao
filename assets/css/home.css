@@ -45,7 +45,7 @@ p{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    height: 200vh; 
+    height: 200vh;
     justify-content: space-between; 
 }
 

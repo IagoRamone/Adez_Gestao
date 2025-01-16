@@ -100,5 +100,6 @@ $nomeUsuario = $_SESSION['nome'];
             </table>
         </div>
     </div>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>
