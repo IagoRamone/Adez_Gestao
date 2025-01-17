@@ -99,23 +99,25 @@ if (!isset($_SESSION['nome'])) {
         <h1>Squads</h1>
     <div class="squads-container">
 
-        <a href="/assets/pages/squads/squad1.html" class="squad-card">
+        <a href="/assets/pages/squads/squad1/squad.html" class="squad-card">
             <h3>Squad 1</h3>
             <p>Responsável pelo desenvolvimento de novas funcionalidades.</p>
         </a>
 
-        <a href="/assets/pages/squads/squad2.html" class="squad-card">
+        <a href="/assets/pages/squads/squad2/squad.html" class="squad-card">
             <h3>Squad 2</h3>
             <p>Focado na manutenção e correção de bugs.</p>
         </a>
-        <a href="/assets/pages/squads/squad3.html" class="squad-card">
+        <a href="/assets/pages/squads/squad3/squad.html" class="squad-card">
             <h3>Squad 3</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
-        <a href="/assets/pages/squads/squad5.html" class="squad-card">
+        <a href="/assets/pages/squads/squad4/squad.html" class="squad-card">
+            <h3>Squad 4</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
-        <a href="/assets/pages/squads/squadx.html" class="squad-card">
+        <a href="/assets/pages/squads/squad5/squad.html" class="squad-card">
+            <h3>Squad 5</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
     </div>
