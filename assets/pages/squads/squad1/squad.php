@@ -15,7 +15,7 @@ if (!isset($_SESSION['nome'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squad 1</title>
-    <link rel="stylesheet" href="/assets/css/squads/squad1.css">
+    <link rel="stylesheet" href="/assets/css/squads/squad.css">
 </head>
 <body>
     <div class="sidebar" id="sidebar">
