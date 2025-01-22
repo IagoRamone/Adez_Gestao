@@ -19,6 +19,13 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result && $row = $result->fetch_assoc()) {
+    
+    if (!empty($row['photo_path'])) {
+        echo '<img src="' . htmlspecialchars($row['photo_path']) . '" alt="Foto do Funcionário" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;">';
+    } else {
+        echo '<img src="/assets/img/placeholder.jpg" alt="Foto do Funcionário" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd;">';
+    }
+
     echo "<p><strong>Nome:</strong> " . htmlspecialchars($row['name']) . "</p>";
     echo "<p><strong>Email:</strong> " . htmlspecialchars($row['email']) . "</p>";
     echo "<p><strong>CPF:</strong> " . htmlspecialchars($row['cpf']) . "</p>";

@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $photoPath = null;
 
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-        $uploadDir = '../uploads/funcionarios/';
+        $uploadDir = '/public_html/uploads/funcionarios/';
         $photoName = uniqid() . "_" . basename($_FILES['photo']['name']);
         $photoPath = $uploadDir . $photoName;
 

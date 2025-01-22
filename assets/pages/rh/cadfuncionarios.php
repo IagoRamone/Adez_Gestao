@@ -48,7 +48,7 @@ $nomeUsuario = $_SESSION['nome'];
         <br>
         <div id="cadastro" class="form-container">
             <h2>Cadastro de Novo Funcionário</h2>
-            <form action="/assets/php/cadastro.php" method="post">
+            <form action="/assets/php/cadastro.php" method="post" enctype="multipart/form-data">
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>
             

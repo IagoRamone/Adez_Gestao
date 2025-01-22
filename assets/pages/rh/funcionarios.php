@@ -205,7 +205,7 @@ $nomeUsuario = $_SESSION['nome'];
         </div>
 
         <div class="modal-body">
-            <img src="/assets/img/placeholder.jpg" alt="Foto do funcionário">
+        <div id="modal-photo"></div>
 
             <div class="info" id="modal-body-info">
             </div>
@@ -220,19 +220,31 @@ $nomeUsuario = $_SESSION['nome'];
 
 <script>
     function showModal(funcionarioId) {
-        const modal = document.getElementById('modal');
-        const modalBodyInfo = document.getElementById('modal-body-info');
-        modal.style.display = 'block';
+    const modal = document.getElementById('modal');
+    const modalBodyInfo = document.getElementById('modal-body-info');
+    const modalPhoto = document.getElementById('modal-photo');
+    modal.style.display = 'block';
 
-        fetch(`/assets/php/getFuncionarioDetails.php?id=${funcionarioId}`)
-            .then(response => response.text())
-            .then(data => {
-                modalBodyInfo.innerHTML = data;
-            })
-            .catch(error => {
-                modalBodyInfo.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
-            });
-    }
+    fetch(`/assets/php/getFuncionarioDetails.php?id=${funcionarioId}`)
+        .then(response => response.text())
+        .then(data => {
+    
+            const div = document.createElement('div');
+            div.innerHTML = data;
+
+            const img = div.querySelector('img');
+            const info = div.querySelectorAll('p');
+
+            modalPhoto.innerHTML = img ? img.outerHTML : '';
+            modalBodyInfo.innerHTML = '';
+            info.forEach(p => modalBodyInfo.appendChild(p));
+        })
+        .catch(error => {
+            modalPhoto.innerHTML = '<p>Erro ao carregar a foto.</p>';
+            modalBodyInfo.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
+        });
+}
+
 
     function closeModal() {
         const modal = document.getElementById('modal');
