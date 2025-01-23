@@ -90,7 +90,7 @@ a{
 
 /*Fim do sidebar*/
 
-search-box{
+.search-box{
     width: fit-content;
     height: fit-content;
     position: relative;
@@ -167,7 +167,6 @@ search-box{
 #suggestions div:hover {
     background-color: #f0f0f0;
 }
-
 td,th{
     color: black;
 }

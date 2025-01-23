@@ -1,4 +1,3 @@
-//Js para realizar a pesquisa de funcionarios no search-box
 
 document.getElementById('search-bar').addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
@@ -15,14 +14,13 @@ function searchEmployee() {
         return;
     }
     
-    fetch(`../php/funcionarios.php?query=${encodeURIComponent(name)}`)
+    fetch(`../php/cliente.php?query=${encodeURIComponent(name)}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {
                 alert(data.error);
                 return;
             }
-            document.getElementById('employee-photo').src = `/uploads/funcionarios/${data.foto || 'placeholder.png'}`;
             document.getElementById('employee-name').textContent = data.nome;
             document.getElementById('employee-email').textContent = data.email;
             document.getElementById('employee-cpf').textContent = data.cpf;

@@ -17,6 +17,7 @@ $nomeUsuario = $_SESSION['nome'];
     <title>Lista de Clientes</title>
     <link rel="stylesheet" href="/assets/css/financeiro/cliente.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -45,7 +46,7 @@ $nomeUsuario = $_SESSION['nome'];
     <div class="content">
     <h1>Clientes</h1>
     <div id="search-container">
-        <form method="GET" action="">
+        <form method="GET" action="/assets/php/search_clients.php">
             <div class="search-box">
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" name="query" class="input-search" placeholder="Procurar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
@@ -110,7 +111,7 @@ $nomeUsuario = $_SESSION['nome'];
         </div>
     </div>
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/buscar.js"></script>
+    <script src="/assets/js/buscarcliente.js"></script>
     <script src="/assets/js/filtrosugestao.js"></script>
     <script src="/assets/js/script.js"></script>
 </body>
