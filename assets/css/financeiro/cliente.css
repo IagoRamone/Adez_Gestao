@@ -87,41 +87,116 @@ a{
     border-top: 1px solid #444; 
 }
 
+
 /*Fim do sidebar*/
 
-.table-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.search-box{
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+
+  }
+  .input-search{
+    height: 50px;
+    width: 50px;
+    border-style: none;
+    padding: 10px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    outline: none;
+    border-radius: 25px;
+    transition: all .5s ease-in-out;
+    background-color: #22a6b3;
+    padding-right: 40px;
+    color:black;
+  }
+  .input-search::placeholder{
+    color:black;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: 100;
+  }
+  .btn-search{
+    width: 50px;
+    height: 50px;
+    border-style: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    color:black;
+    background-color:#fdd028;
+    pointer-events: painted;  
+  }
+  .btn-search:focus ~ .input-search{
+    width: 300px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom:1px solid black;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+  }
+  .input-search:focus{
+    width: 300px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-bottom:1px solid black;
+    transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+  }
+
+#suggestions {
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
 }
 
-.table-container h2 {
-    color: #f0a500;
-    text-align: center;
-    margin-bottom: 20px;
+#suggestions div {
+    padding: 10px;
+    cursor: pointer;
 }
 
+#suggestions div:hover {
+    background-color: #f0f0f0;
+}
+td,th{
+    color: black;
+}
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
 }
-
-table th, table td {
+thead {
+    background-color: #f4f4f4;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
     text-align: left;
-    padding: 12px;
-    border: 1px solid #ccc;
-    color: black;
 }
-
-table th {
-    background-color: #f0a500;
-    color: #fff;
+th {
+    background-color: #4CAF50;
+    color: white;
 }
-
-table tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #f9f9f9;
-    color: black;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.no-results {
+    text-align: center;
+    font-size: 16px;
+    color: red;
+    font-weight: bold;
 }

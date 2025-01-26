@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['nome'])) {
@@ -41,6 +40,7 @@ if (!isset($_SESSION['nome'])) {
 
     <div class="logged-user">
         <p id="user">Bem-vindo,  <?php echo htmlspecialchars($nome); ?>!</p>
+            <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
 
@@ -48,14 +48,39 @@ if (!isset($_SESSION['nome'])) {
 
     <div class="content">
         <h1>Bem-vindo à Adez Gestão</h1>
-
+        <br>
         <div class="dashboard-section">
             <h3>Resumo Geral</h3>
+            <br>
             <div class="cards-container">
-                <div class="card">
-                    <h4>Total de Funcionários</h4>
-                    <p>150</p>
-                </div>
+            <div class="card">
+    <h4>Total de Funcionários</h4>
+    <p>
+        <?php
+        $host = '127.0.0.1:3306';
+        $dbname = 'u561882274_adez_gestao';
+        $username = 'u561882274_Iagoramone';
+        $password = '/7Sn#;|#&*H';
+        
+        $conn = new mysqli($host, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Falha na conexão: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT COUNT(*) AS total FROM funcionarios";
+        $result = $conn->query($sql);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            echo $row['total'];
+        } else {
+            echo "0";
+        }
+
+        $conn->close();
+        ?>
+    </p>
+</div>
                 <div class="card">
                     <h4>Despesas Mensais</h4>
                     <p>R$ 50.000,00</p>
@@ -75,25 +100,23 @@ if (!isset($_SESSION['nome'])) {
         <h1>Squads</h1>
     <div class="squads-container">
 
-        <a href="/assets/pages/squads/squad1.html" class="squad-card">
+        <a href="/assets/pages/squads/squad1/squad.php" class="squad-card">
             <h3>Squad 1</h3>
             <p>Responsável pelo desenvolvimento de novas funcionalidades.</p>
         </a>
 
-        <a href="/assets/pages/squads/squad2.html" class="squad-card">
+        <a href="/assets/pages/squads/squad2/squad.php" class="squad-card">
             <h3>Squad 2</h3>
             <p>Focado na manutenção e correção de bugs.</p>
         </a>
-        <a href="/assets/pages/squads/squad3.html" class="squad-card">
+        <a href="/assets/pages/squads/squad3/squad.php" class="squad-card">
             <h3>Squad 3</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
         <a href="/assets/pages/squads/squad5.html" class="squad-card">
-            <h3>Squad 4</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
         <a href="/assets/pages/squads/squadx.html" class="squad-card">
-            <h3>Squad 5</h3>
             <p>Especializado em infraestrutura e DevOps.</p>
         </a>
     </div>
