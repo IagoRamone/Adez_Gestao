@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$host = '127.0.0.1:3306';
+$host = '127.0.0.1';
 $dbname = 'u561882274_adez_gestao';
 $username = 'u561882274_Iagoramone';
 $password = '/7Sn#;|#&*H';
@@ -19,23 +19,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = $_POST['senha'];
 
     $user = mysqli_real_escape_string($conn, $user);
-    $pass = mysqli_real_escape_string($conn, $pass);
+    $pass = mysqli_real_escape_string($conn, $pass); // Apenas por segurança
 
-    $sql = "SELECT email, senha FROM admins WHERE email = '$user'";
+    $sql = "SELECT nome, email, senha, role FROM admins WHERE email = '$user'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
-        if ($pass === $row['senha']) {
-            $_SESSION['email'] = $user;
-
-            $sqlNome = "SELECT nome FROM admins WHERE email = '$user'";
-            $resultNome = $conn->query($sqlNome);
-            if ($resultNome->num_rows > 0) {
-                $rowNome = $resultNome->fetch_assoc();
-                $_SESSION['nome'] = $rowNome['nome'];
-            }
+        // Comparação direta da senha (NÃO RECOMENDADO PARA PRODUÇÃO)
+        if ($pass == $row['senha']) {
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['nome'] = $row['nome'];
+            $_SESSION['role'] = $row['role']; // Adiciona a role na sessão
 
             header("Location: /assets/pages/home.php");
             exit;

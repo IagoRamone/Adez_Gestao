@@ -1,12 +1,13 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['nome'])) {
+if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
     header("Location: /index.php");
     exit();
 }
 
- $nomeUsuario = $_SESSION['nome'];
+$nomeUsuario = $_SESSION['nome'];
+$roleUsuario = $_SESSION['role'];
 ?> 
 
 <!DOCTYPE html>
@@ -21,26 +22,38 @@ if (!isset($_SESSION['nome'])) {
 <body>
 <div class="sidebar" id="sidebar">
     <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
-    <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
-    <ul id="submenu-rh">
+
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')" 
+        <?php if ($roleUsuario !== 'rh') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        RH <?php if ($roleUsuario !== 'rh') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-rh" <?php if ($roleUsuario !== 'rh') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
         <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
     </ul>
-    <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')">Financeiro</a>
-    <ul id="submenu-finan">
+
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')"
+        <?php if ($roleUsuario !== 'financeiro') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        Financeiro <?php if ($roleUsuario !== 'financeiro') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-finan" <?php if ($roleUsuario !== 'financeiro') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
-    <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">Ti</a>
-    <ul id="submenu-ti">
-            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')"
+        <?php if ($roleUsuario !== 'ti') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        TI <?php if ($roleUsuario !== 'ti') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-ti" <?php if ($roleUsuario !== 'ti') echo 'style="display: none;"'; ?>>
+        <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
+
     <a class="sidemenu" href="../php/logout.php">Logout</a>
 
     <div class="logged-user">
-        <p id="user">Bem-vindo,  <?php echo htmlspecialchars($nome); ?>!</p>
-            <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
+        <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
 </div>
 

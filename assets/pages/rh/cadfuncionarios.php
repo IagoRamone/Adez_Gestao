@@ -1,14 +1,14 @@
 <?php
-
 session_start();
 
-if (!isset($_SESSION['nome'])) {
+if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
     header("Location: /index.php");
     exit();
 }
 
 $nomeUsuario = $_SESSION['nome'];
-?>
+$roleUsuario = $_SESSION['role'];
+?> 
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,28 +20,42 @@ $nomeUsuario = $_SESSION['nome'];
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
 </head>
 <body>
-    <div class="sidebar">
-        <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')">RH</a>
-        <ul id="submenu-rh">
-            <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
-            <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
-        </ul>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')" >Financeiro</a>
-        <ul id="submenu-finan">
-        <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Novo clientes</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li></ul>
-        <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')">TI</a>
-        <ul id="submenu-ti">
-            <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
-            <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
-        </ul>
-        <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
+<div class="sidebar" id="sidebar">
+    <a href="/assets/pages/home.php"><h2>Adez Gestão</h2></a>
 
-        <div class="logged-user">
-            <p>Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
-        </div>
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-rh')" 
+        <?php if ($roleUsuario !== 'rh') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        RH <?php if ($roleUsuario !== 'rh') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-rh" <?php if ($roleUsuario !== 'rh') echo 'style="display: none;"'; ?>>
+        <li><a class="sidemenu" href="/assets/pages/rh/cadfuncionarios.php">Cadastro de Novo Funcionário</a></li>
+        <li><a class="sidemenu" href="/assets/pages/rh/funcionarios.php">Funcionários</a></li>
+    </ul>
+
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-finan')"
+        <?php if ($roleUsuario !== 'financeiro') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        Financeiro <?php if ($roleUsuario !== 'financeiro') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-finan" <?php if ($roleUsuario !== 'financeiro') echo 'style="display: none;"'; ?>>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+    </ul>
+
+    <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')"
+        <?php if ($roleUsuario !== 'ti') echo 'style="pointer-events: none; color: gray;"'; ?>>
+        TI <?php if ($roleUsuario !== 'ti') echo '🔒'; ?>
+    </a>
+    <ul id="submenu-ti" <?php if ($roleUsuario !== 'ti') echo 'style="display: none;"'; ?>>
+        <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+    </ul>
+
+    <a class="sidemenu" href="../php/logout.php">Logout</a>
+
+    <div class="logged-user">
+        <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
     </div>
+</div>
 
     <div class="content">
         <h1>Cadastro de Novo Funcionário</h1>
@@ -74,8 +88,16 @@ $nomeUsuario = $_SESSION['nome'];
                 <input type="date" id="dataAdmissão" name="dataAdmissão" required>
             
                 <label for="role">Cargo/Tipo</label>
-                <input type="text" id="role" name="role">
-
+                <select id="role" name="role">
+                 <option value="RH">RH</option>
+                 <option value="Financeiro">Financeiro</option>
+                 <option value="Squad 1">Squad 1</option>
+                 <option value="Squad 2">Squad 2</option>
+                 <option value="Squad 3">Squad 3</option>
+                 <option value="Squad 4">Squad 4</option>
+                 <option value="Squad 5">Squad 5</option>
+                </select>
+                
                 <label for="pis">PIS</label>
                 <input type="text" id="pis" name="pis" placeholder="Digite o número do PIS" required>
             
