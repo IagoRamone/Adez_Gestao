@@ -39,8 +39,6 @@ $roleUsuario = $_SESSION['role'];
     <ul id="submenu-finan" <?php if ($roleUsuario !== 'financeiro' && $roleUsuario !== 'admin') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/dre.php">Cadastro DRE</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/chartdre.php">DRE</a></li>
     </ul>
 
     <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')"
@@ -62,79 +60,26 @@ $roleUsuario = $_SESSION['role'];
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 
     <div class="content">
-        <h1>Bem-vindo à Adez Gestão</h1>
-        <br>
-        <div class="dashboard-section">
-            <h3>Resumo Geral</h3>
-            <br>
-            <div class="cards-container">
-            <div class="card">
-    <h4>Total de Funcionários</h4>
-    <p>
-        <?php
-        $host = '127.0.0.1:3306';
-        $dbname = 'u561882274_adez_gestao';
-        $username = 'u561882274_Iagoramone';
-        $password = '/7Sn#;|#&*H';
+        <form action="/assets/php/processa_dre.php" method="POST">
+            <label for="categoria">Categoria:</label>
+            <select name="categoria" required>
+                <option value="Receita">Receita</option>
+                <option value="Custo">Custo</option>
+                <option value="Despesa">Despesa</option>
+            </select>
         
-        $conn = new mysqli($host, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Falha na conexão: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT COUNT(*) AS total FROM funcionarios";
-        $result = $conn->query($sql);
-
-        if ($result && $row = $result->fetch_assoc()) {
-            echo $row['total'];
-        } else {
-            echo "0";
-        }
-
-        $conn->close();
-        ?>
-    </p>
-</div>
-                <div class="card">
-                    <h4>Despesas Mensais</h4>
-                    <p>R$ 50.000,00</p>
-                </div>
-                <div class="card">
-                    <h4>Faturamento</h4>
-                    <p>R$ 200.000,00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="dashboard-section">
-            <h3>Gráficos</h3>
-            <div class="chart">Gráfico de Faturamento (em breve)</div>
-        </div>
-
-        <h1>Squads</h1>
-    <div class="squads-container">
-
-        <a href="/assets/pages/squads/squad1/squad.php" class="squad-card">
-            <h3>Squad 1</h3>
-            <p>Responsável pelo desenvolvimento de novas funcionalidades.</p>
-        </a>
-
-        <a href="/assets/pages/squads/squad2/squad.php" class="squad-card">
-            <h3>Squad 2</h3>
-            <p>Focado na manutenção e correção de bugs.</p>
-        </a>
-        <a href="/assets/pages/squads/squad3/squad.php" class="squad-card">
-            <h3>Squad 3</h3>
-            <p>Especializado em infraestrutura e DevOps.</p>
-        </a>
-        <a href="/assets/pages/squads/squad5.html" class="squad-card">
-            <p>Especializado em infraestrutura e DevOps.</p>
-        </a>
-        <a href="/assets/pages/squads/squadx.html" class="squad-card">
-            <p>Especializado em infraestrutura e DevOps.</p>
-        </a>
-    </div>
+            <label for="descricao">Descrição:</label>
+            <input type="text" name="descricao" required>
+        
+            <label for="valor">Valor:</label>
+            <input type="number" name="valor" step="0.01" required>
+        
+            <label for="data_lancamento">Data do Lançamento:</label>
+            <input type="date" name="data_lancamento" required>
+        
+            <button type="submit">Salvar Lançamento</button>
+        </form>
+        
     </div>
 
     <script>
