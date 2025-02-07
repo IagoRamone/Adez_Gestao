@@ -16,9 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssds", $categoria, $descricao, $valor, $data_lancamento);
 
     if ($stmt->execute()) {
-        echo "Lançamento cadastrado com sucesso!";
+        echo json_encode(['status' => 'success']);
     } else {
-        echo "Erro ao cadastrar: " . $conn->error;
+        echo json_encode(['status' => 'error', 'message' => $conn->error]);
     }
 
     $stmt->close();

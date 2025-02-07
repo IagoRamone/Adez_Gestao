@@ -33,8 +33,12 @@ $conn->close();
     <title>Adez Gestão</title>
     <link rel="stylesheet" href="/assets/css/home.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
 
+#subtitulo{
+    color: black
+}
 form {
     max-width: 400px;
     margin: 20px auto;
@@ -77,6 +81,22 @@ button {
 button:hover {
     background: #0056b3;
 }
+.filter-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .filter-container label,
+    .filter-container input,
+    .filter-container button {
+        font-size: 14px;
+    }
+    .chart-container {
+        width: 50%;
+        max-width: 400px;
+        margin: auto;
+    }
     </style>
 </head>
 <body>
@@ -140,32 +160,107 @@ button:hover {
             <button type="submit">Salvar Lançamento</button>
         </form>
 
-    <h2>Demonstrativo de Resultado do Exercício (DRE)</h2>
+<h1 >Demonstrativo de Resultado do Exercício (DRE)</h1>
+
+<form id="dateFilterForm">
+    <label for="data_inicio">Data Início:</label>
+    <input type="date" id="data_inicio" name="data_inicio">
+    
+    <label for="data_fim">Data Fim:</label>
+    <input type="date" id="data_fim" name="data_fim">
+    
+    <button type="submit">Filtrar</button>
+</form>
+
+
+<div class="chart-container">
     <canvas id="graficoDRE"></canvas>
+</div>
+    
+<script>
 
-    <script>
-        const ctx = document.getElementById('graficoDRE').getContext('2d');
+const form = document.querySelector('form');
+form.addEventListener('submit', function (e) {
+    e.preventDefault(); 
 
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: <?php echo json_encode($categorias); ?>,
-                datasets: [{
-                    data: <?php echo json_encode($valores); ?>,
-                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top'
+    const formData = new FormData(form); 
+
+    fetch('/assets/php/processa_dre.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.status === 'success') {
+            alert("Lançamento salvo com sucesso!");
+
+            updateChart();
+        } else {
+            alert("Erro ao salvar lançamento: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao fazer a requisição:', error);
+        alert("Erro ao processar a requisição.");
+    });
+});
+
+
+function updateChart(data = null) {
+        fetch('/assets/php/atualizar_grafico.php') 
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('graficoDRE').getContext('2d');
+                
+                const chartData = data ? data : { categorias: ['Nenhuma categoria'], valores: [0] };
+
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: chartData.categorias,
+                        datasets: [{
+                            data: chartData.valores,
+                            backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' }
+                        }
                     }
-                }
-            }
-        });
-    </script>
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar gráfico:', error);
+            });
+}
+
+const dateFilterForm = document.getElementById('dateFilterForm');
+dateFilterForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const dataInicio = document.getElementById('data_inicio').value;
+    const dataFim = document.getElementById('data_fim').value;
+
+    fetch('/assets/php/atualizar_grafico.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data_inicio: dataInicio, data_fim: dataFim })
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateChart(data);
+    })
+    .catch(error => {
+        console.error('Erro ao aplicar filtro de data:', error);
+    });
+});
+</script>
 </div>       
 
     <script>
