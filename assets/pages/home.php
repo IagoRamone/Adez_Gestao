@@ -39,8 +39,7 @@ $roleUsuario = $_SESSION['role'];
     <ul id="submenu-finan" <?php if ($roleUsuario !== 'financeiro' && $roleUsuario !== 'admin') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/dre.php">Cadastro DRE</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/chartdre.php">DRE</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/dre.php">DRE</a></li>
     </ul>
 
     <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')"

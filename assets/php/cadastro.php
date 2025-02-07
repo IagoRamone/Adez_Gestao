@@ -1,18 +1,7 @@
 <?php
 session_start();
+require_once './db_connection.php';
 
-// Configurações do banco de dados
-$host = '127.0.0.1:3306';
-$dbname = 'u561882274_adez_gestao';
-$username = 'u561882274_Iagoramone';
-$password = '/7Sn#;|#&*H';
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-// Verificar a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     

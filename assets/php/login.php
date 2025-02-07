@@ -1,16 +1,7 @@
 <?php
 session_start();
 
-$host = '127.0.0.1';
-$dbname = 'u561882274_adez_gestao';
-$username = 'u561882274_Iagoramone';
-$password = '/7Sn#;|#&*H';
-
-$conn = new mysqli($host, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
+require_once './db_connection.php';
 
 $error_message = ''; 
 
@@ -19,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = $_POST['senha'];
 
     $user = mysqli_real_escape_string($conn, $user);
-    $pass = mysqli_real_escape_string($conn, $pass); // Apenas por segurança
+    $pass = mysqli_real_escape_string($conn, $pass); 
 
     $sql = "SELECT nome, email, senha, role FROM admins WHERE email = '$user'";
     $result = $conn->query($sql);
@@ -27,19 +18,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
-        // Comparação direta da senha (NÃO RECOMENDADO PARA PRODUÇÃO)
         if ($pass == $row['senha']) {
             $_SESSION['email'] = $row['email'];
             $_SESSION['nome'] = $row['nome'];
-            $_SESSION['role'] = $row['role']; // Adiciona a role na sessão
+            $_SESSION['role'] = $row['role'];
 
             header("Location: /assets/pages/home.php");
             exit;
         } else {
-            $error_message = 'Senha ou email incorretos!';
+            header("Location: /index.php?error=" . urlencode('Senha ou email incorretos!'));
+            exit;
         }
     } else {
-        $error_message = 'Senha ou email incorretos!';
+        header("Location: /index.php?error=" . urlencode('Senha ou email incorretos!'));
+        exit;
     }
 }
 

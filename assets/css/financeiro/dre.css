@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    min-height: 100vh;
+    background-color:white;
+    color: #fff;
+}
+h1 {
+    color: black;
+    font-family: "Exo 2";
+    font-weight: 400;
+    text-align: center;
+    font-size:50px;
+}
+h3{
+    color: black;
+}
+/*Estilização dos links*/
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+p{
+    color: black;
+}
+#user{
+    color: white;
+}
+
+/*Sidebar*/
+.sidebar {
+    background-color: #000;
+    color: white;
+    width: 250px;
+    padding: 20px;
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 200vh;
+    justify-content: space-between; 
+}
+
+.sidebar h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    display: block;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 20px;
+    display: none; 
+}
+
+.sidebar ul.active {
+    display: block; 
+}
+
+.sidebar ul li {
+    margin: 5px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    font-size: 14px;
+}
+
+.sidebar ul li a:hover {
+    color: black;
+}
+
+.sidemenu:hover {
+    background-color: #fdd028;
+    color: #000;
+}
+
+.logged-user {
+    margin-top: auto; 
+    text-align: center; 
+    padding-top: 20px;
+    color: white;
+    border-top: 1px solid #444; 
+}
+
+/*Fim do sidebar*/
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+
+/* Menu toggle */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .squad-card {
+        width: 100%;
+    }
+}
+
+@media (min-width:1200px) and (max-width:1400px){   
+    .squad-card {
+        width: 160px;
+}
+
+}
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        left: -250px;
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.active ~ .content {
+        margin-left: 250px;
+    }
+}

@@ -13,7 +13,13 @@
 	<link rel="stylesheet" type="text/css" href="/assets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/assets/css/main.css">
 </head>
-<body>		
+<body>	
+		
+	<div id="error-popup" class="error-popup hidden">
+		<span id="error-message"></span>
+		<button onclick="closePopup()">×</button>
+	</div>
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -70,6 +76,24 @@
 	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/assets/vendor/select2/select2.min.js"></script>
 	<script src="/assets/vendor/tilt/tilt.jquery.min.js"></script>
+	<script>
+		// Função para exibir o pop-up de erro
+		function showErrorPopup(message) {
+			const popup = document.getElementById("error-popup");
+			const errorMessage = document.getElementById("error-message");
+			errorMessage.textContent = message;
+			popup.classList.remove("hidden");
+			setTimeout(() => popup.classList.add("hidden"), 5000); 
+		}
+
+		function closePopup() {
+			document.getElementById("error-popup").classList.add("hidden");
+		}
+
+		<?php if (!empty($_GET['error'])): ?>
+			showErrorPopup("<?php echo htmlspecialchars($_GET['error']); ?>");
+		<?php endif; ?>
+	</script>
 
 	<script >
 		$('.js-tilt').tilt({

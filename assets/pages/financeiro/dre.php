@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once '../../php/db_connection.php';
+
 if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
     header("Location: /index.php");
     exit();
@@ -8,6 +10,19 @@ if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
 
 $nomeUsuario = $_SESSION['nome'];
 $roleUsuario = $_SESSION['role'];
+
+$sql = "SELECT categoria, SUM(valor) as total FROM dre_lancamentos GROUP BY categoria";
+$result = $conn->query($sql);
+
+$categorias = [];
+$valores = [];
+
+while ($row = $result->fetch_assoc()) {
+    $categorias[] = $row['categoria'];
+    $valores[] = $row['total'];
+}
+
+$conn->close();
 ?> 
 
 <!DOCTYPE html>
@@ -18,6 +33,51 @@ $roleUsuario = $_SESSION['role'];
     <title>Adez Gestão</title>
     <link rel="stylesheet" href="/assets/css/home.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
+    <style>
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+    </style>
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -79,8 +139,34 @@ $roleUsuario = $_SESSION['role'];
         
             <button type="submit">Salvar Lançamento</button>
         </form>
-        
-    </div>
+
+    <h2>Demonstrativo de Resultado do Exercício (DRE)</h2>
+    <canvas id="graficoDRE"></canvas>
+
+    <script>
+        const ctx = document.getElementById('graficoDRE').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode($categorias); ?>,
+                datasets: [{
+                    data: <?php echo json_encode($valores); ?>,
+                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</div>       
 
     <script>
         function toggleSubmenu(submenuId) {

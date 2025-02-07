@@ -129,6 +129,7 @@ $roleUsuario = $_SESSION['role'];
     <ul id="submenu-finan" <?php if ($roleUsuario !== 'financeiro' && $roleUsuario !== 'admin') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cadcliente.php">Cadastro de Clientes</a></li>
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
+        <li><a class="sidemenu" href="/assets/pages/financeiro/dre.php">DRE</a></li>
     </ul>
 
     <a class="sidemenu" onclick="toggleSubmenu('submenu-ti')"
@@ -137,7 +138,6 @@ $roleUsuario = $_SESSION['role'];
     </a>
     <ul id="submenu-ti" <?php if ($roleUsuario !== 'ti' && $roleUsuario !== 'admin') echo 'style="display: none;"'; ?>>
         <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
-        <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
 
     <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
