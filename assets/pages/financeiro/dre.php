@@ -144,7 +144,6 @@ button:hover {
             <label for="categoria">Categoria:</label>
             <select name="categoria" required>
                 <option value="Receita">Receita</option>
-                <option value="Custo">Custo</option>
                 <option value="Despesa">Despesa</option>
             </select>
         
@@ -171,7 +170,6 @@ button:hover {
     
     <button type="submit">Filtrar</button>
 </form>
-
 
 <div class="chart-container">
     <canvas id="graficoDRE"></canvas>
@@ -220,7 +218,7 @@ function updateChart(data = null) {
                         labels: chartData.categorias,
                         datasets: [{
                             data: chartData.valores,
-                            backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
+                            backgroundColor: ['#36A2EB', '#FF6384'],
                             borderWidth: 1
                         }]
                     },
