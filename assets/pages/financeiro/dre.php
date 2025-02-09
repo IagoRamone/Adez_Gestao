@@ -11,19 +11,17 @@ if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
 $nomeUsuario = $_SESSION['nome'];
 $roleUsuario = $_SESSION['role'];
 
-$sql = "SELECT categoria, SUM(valor) as total FROM dre_lancamentos GROUP BY categoria";
+$sql = "SELECT DATE(data_lancamento) as data, categoria, SUM(valor) as total FROM dre_lancamentos GROUP BY data, categoria ORDER BY data ASC";
 $result = $conn->query($sql);
 
-$categorias = [];
-$valores = [];
+$dados = [];
 
 while ($row = $result->fetch_assoc()) {
-    $categorias[] = $row['categoria'];
-    $valores[] = $row['total'];
+    $dados[$row['categoria']][] = ['data' => $row['data'], 'total' => $row['total']];
 }
 
 $conn->close();
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -159,7 +157,7 @@ button:hover {
             <button type="submit">Salvar Lançamento</button>
         </form>
 
-<h1 >Demonstrativo de Resultado do Exercício (DRE)</h1>
+        <h1>Demonstrativo de Resultado do Exercício (DRE)</h1>
 
 <form id="dateFilterForm">
     <label for="data_inicio">Data Início:</label>
@@ -171,103 +169,81 @@ button:hover {
     <button type="submit">Filtrar</button>
 </form>
 
-<div class="chart-container">
-    <canvas id="graficoDRE"></canvas>
+<div class="chart-container" style="width:80%; margin:auto;">
+    <canvas id="lineChart"></canvas>
 </div>
-    
+<div class="chart-container" style="width:80%; margin:auto;">
+    <canvas id="barChart"></canvas>
+</div>
+
 <script>
+    let dados = <?php echo json_encode($dados); ?>;
 
-const form = document.querySelector('form');
-form.addEventListener('submit', function (e) {
-    e.preventDefault(); 
+    function formatarDados(dados) {
+        let labels = new Set();
+        let datasets = [];
 
-    const formData = new FormData(form); 
-
-    fetch('/assets/php/processa_dre.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json()) 
-    .then(data => {
-        if (data.status === 'success') {
-            alert("Lançamento salvo com sucesso!");
-
-            updateChart();
-        } else {
-            alert("Erro ao salvar lançamento: " + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao fazer a requisição:', error);
-        alert("Erro ao processar a requisição.");
-    });
-});
-
-
-function updateChart(data = null) {
-        fetch('/assets/php/atualizar_grafico.php') 
-            .then(response => response.json())
-            .then(data => {
-                const ctx = document.getElementById('graficoDRE').getContext('2d');
-                
-                const chartData = data ? data : { categorias: ['Nenhuma categoria'], valores: [0] };
-
-                new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: chartData.categorias,
-                        datasets: [{
-                            data: chartData.valores,
-                            backgroundColor: ['#36A2EB', '#FF6384'],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'top' }
-                        }
-                    }
-                });
-            })
-            .catch(error => {
-                console.error('Erro ao atualizar gráfico:', error);
+        Object.keys(dados).forEach(categoria => {
+            let dataPoints = dados[categoria].map(entry => {
+                labels.add(entry.data);
+                return { x: entry.data, y: entry.total };
             });
-}
+            datasets.push({
+                label: categoria,
+                data: dataPoints,
+                borderWidth: 2,
+                fill: false,
+                borderColor: '#' + Math.floor(Math.random()*16777215).toString(16)
+            });
+        });
 
-const dateFilterForm = document.getElementById('dateFilterForm');
-dateFilterForm.addEventListener('submit', function (e) {
-    e.preventDefault();
+        return { labels: Array.from(labels), datasets };
+    }
 
-    const dataInicio = document.getElementById('data_inicio').value;
-    const dataFim = document.getElementById('data_fim').value;
+    function criarGraficos() {
+        let ctx1 = document.getElementById('lineChart').getContext('2d');
+        let ctx2 = document.getElementById('barChart').getContext('2d');
+        let chartData = formatarDados(dados);
 
-    fetch('/assets/php/atualizar_grafico.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data_inicio: dataInicio, data_fim: dataFim })
-    })
-    .then(response => response.json())
-    .then(data => {
-        updateChart(data);
-    })
-    .catch(error => {
-        console.error('Erro ao aplicar filtro de data:', error);
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: chartData.datasets
+            },
+            options: { responsive: true }
+        });
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: chartData.labels,
+                datasets: chartData.datasets
+            },
+            options: { responsive: true }
+        });
+    }
+
+    criarGraficos();
+
+    document.getElementById('dateFilterForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let dataInicio = document.getElementById('data_inicio').value;
+        let dataFim = document.getElementById('data_fim').value;
+
+        fetch('/assets/php/atualizar_grafico.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data_inicio: dataInicio, data_fim: dataFim })
+        })
+        .then(response => response.json())
+        .then(novosDados => {
+            dados = novosDados;
+            criarGraficos();
+        })
+        .catch(error => console.error('Erro ao aplicar filtro de data:', error));
     });
-});
 </script>
-</div>       
-
-    <script>
-        function toggleSubmenu(submenuId) {
-            const submenu = document.getElementById(submenuId);
-            if (submenu) {
-                submenu.classList.toggle('active');
-            }
-        }
-    </script>
 </body>
 </html>
