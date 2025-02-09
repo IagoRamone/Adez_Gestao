@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 session_start();
 
 require_once '../../php/db_connection.php';
@@ -21,7 +21,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $conn->close();
-?>
+?> -->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -29,7 +29,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adez Gestão</title>
-    <link rel="stylesheet" href="/assets/css/home.css">
+    <link rel="stylesheet" href="/assets/css/financeiro/dre.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -37,6 +37,7 @@ $conn->close();
 #subtitulo{
     color: black
 }
+
 form {
     max-width: 400px;
     margin: 20px auto;
@@ -81,6 +82,7 @@ button:hover {
 }
 .filter-container {
         display: flex;
+        justify-content: left;
         align-items: center;
         gap: 10px;
         margin-bottom: 20px;
@@ -96,6 +98,7 @@ button:hover {
         margin: auto;
     }
     </style>
+
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -136,9 +139,10 @@ button:hover {
 </div>
 
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+<h1>DRE</h1>
 
     <div class="content">
-        <form action="/assets/php/processa_dre.php" method="POST">
+        <form class="form1" action="/assets/php/processa_dre.php" method="POST">
             <label for="categoria">Categoria:</label>
             <select name="categoria" required>
                 <option value="Receita">Receita</option>
@@ -149,33 +153,36 @@ button:hover {
             <input type="text" name="descricao" required>
         
             <label for="valor">Valor:</label>
-            <input type="number" name="valor" step="0.01" required>
+            <input type="text" id="valor" name="valor" required>
         
+  
             <label for="data_lancamento">Data do Lançamento:</label>
             <input type="date" name="data_lancamento" required>
         
             <button type="submit">Salvar Lançamento</button>
         </form>
-
-        <h1>Demonstrativo de Resultado do Exercício (DRE)</h1>
-
-<form id="dateFilterForm">
-    <label for="data_inicio">Data Início:</label>
-    <input type="date" id="data_inicio" name="data_inicio">
     
-    <label for="data_fim">Data Fim:</label>
-    <input type="date" id="data_fim" name="data_fim">
-    
-    <button type="submit">Filtrar</button>
-</form>
+<h1>Demonstrativo de Resultado do Exercício (DRE)</h1>
+
+    <form id="dateFilterForm">
+            <label for="data_inicio">Data Início:</label>
+            <input type="date" id="data_inicio" name="data_inicio">
+            
+            <label for="data_fim">Data Fim:</label>
+            <input type="date" id="data_fim" name="data_fim">
+            
+            <button type="submit">Filtrar</button>
+    </form>  
+      
 
 <div class="chart-container" style="width:80%; margin:auto;">
     <canvas id="lineChart"></canvas>
 </div>
+
 <div class="chart-container" style="width:80%; margin:auto;">
     <canvas id="barChart"></canvas>
 </div>
-
+<!--
 <script>
     let dados = <?php echo json_encode($dados); ?>;
 
@@ -244,6 +251,24 @@ button:hover {
         })
         .catch(error => console.error('Erro ao aplicar filtro de data:', error));
     });
+</script>-->
+
+<script>
+    document.getElementById('valor').addEventListener('input', function (e) {
+    let value = e.target.value;
+
+    // Remove tudo que não é número ou vírgula
+    value = value.replace(/\D/g, "");
+
+    // Converte para número e formata como moeda brasileira
+    value = (parseInt(value) / 100).toLocaleString("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+    e.target.value = value;
+});
+
 </script>
 </body>
 </html>
