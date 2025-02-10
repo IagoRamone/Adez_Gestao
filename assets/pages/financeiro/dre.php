@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 session_start();
 
 require_once '../../php/db_connection.php';
@@ -21,7 +21,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $conn->close();
-?> -->
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -32,72 +32,6 @@ $conn->close();
     <link rel="stylesheet" href="/assets/css/financeiro/dre.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-
-#subtitulo{
-    color: black
-}
-
-form {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
-}
-
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #0056b3;
-}
-.filter-container {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-    .filter-container label,
-    .filter-container input,
-    .filter-container button {
-        font-size: 14px;
-    }
-    .chart-container {
-        width: 50%;
-        max-width: 400px;
-        margin: auto;
-    }
-    </style>
 
 </head>
 <body>
@@ -139,7 +73,6 @@ button:hover {
 </div>
 
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-<h1>DRE</h1>
 
     <div class="content">
         <form class="form1" action="/assets/php/processa_dre.php" method="POST">
@@ -161,9 +94,11 @@ button:hover {
         
             <button type="submit">Salvar Lançamento</button>
         </form>
+<div id="popup" class="popup"></div>
+
     
 <h1>Demonstrativo de Resultado do Exercício (DRE)</h1>
-
+        <br><br>
     <form id="dateFilterForm">
             <label for="data_inicio">Data Início:</label>
             <input type="date" id="data_inicio" name="data_inicio">
@@ -175,100 +110,150 @@ button:hover {
     </form>  
       
 
-<div class="chart-container" style="width:80%; margin:auto;">
-    <canvas id="lineChart"></canvas>
-</div>
-
-<div class="chart-container" style="width:80%; margin:auto;">
-    <canvas id="barChart"></canvas>
-</div>
-<!--
+    <div class="charts-wrapper">
+        <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+            <p>Gráfico de linha.</p>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+            <p>Gráfico em barras</p>
+        </div>
+    </div>
 <script>
     let dados = <?php echo json_encode($dados); ?>;
 
-    function formatarDados(dados) {
-        let labels = new Set();
-        let datasets = [];
+function formatarDados(dados) {
+    let labels = new Set();
+    let datasets = [];
 
-        Object.keys(dados).forEach(categoria => {
-            let dataPoints = dados[categoria].map(entry => {
-                labels.add(entry.data);
-                return { x: entry.data, y: entry.total };
-            });
-            datasets.push({
-                label: categoria,
-                data: dataPoints,
-                borderWidth: 2,
-                fill: false,
-                borderColor: '#' + Math.floor(Math.random()*16777215).toString(16)
-            });
+    Object.keys(dados).forEach(categoria => {
+        let dataPoints = dados[categoria].map(entry => {
+            labels.add(entry.data);
+            return { x: entry.data, y: entry.total };
         });
 
-        return { labels: Array.from(labels), datasets };
-    }
+        let cor = categoria === "Receita" ? "#28a745" : "#dc3545"; 
 
-    function criarGraficos() {
-        let ctx1 = document.getElementById('lineChart').getContext('2d');
-        let ctx2 = document.getElementById('barChart').getContext('2d');
-        let chartData = formatarDados(dados);
-
-        new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: chartData.labels,
-                datasets: chartData.datasets
-            },
-            options: { responsive: true }
+        datasets.push({
+            label: categoria,
+            data: dataPoints,
+            borderWidth: 2,
+            fill: false,
+            borderColor: cor,
+            backgroundColor: cor
         });
-
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: chartData.labels,
-                datasets: chartData.datasets
-            },
-            options: { responsive: true }
-        });
-    }
-
-    criarGraficos();
-
-    document.getElementById('dateFilterForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        let dataInicio = document.getElementById('data_inicio').value;
-        let dataFim = document.getElementById('data_fim').value;
-
-        fetch('/assets/php/atualizar_grafico.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data_inicio: dataInicio, data_fim: dataFim })
-        })
-        .then(response => response.json())
-        .then(novosDados => {
-            dados = novosDados;
-            criarGraficos();
-        })
-        .catch(error => console.error('Erro ao aplicar filtro de data:', error));
     });
-</script>-->
+
+    return { labels: Array.from(labels), datasets };
+}
+
+function criarGraficos() {
+    let ctx1 = document.getElementById('lineChart').getContext('2d');
+    let ctx2 = document.getElementById('barChart').getContext('2d');
+    
+    if (window.lineChartInstance) {
+        window.lineChartInstance.destroy();
+    }
+    if (window.barChartInstance) {
+        window.barChartInstance.destroy();
+    }
+
+    let chartData = formatarDados(dados);
+
+    window.lineChartInstance = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels: chartData.labels,
+            datasets: chartData.datasets
+        },
+        options: { responsive: true }
+    });
+
+    window.barChartInstance = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: chartData.labels,
+            datasets: chartData.datasets
+        },
+        options: { responsive: true }
+    });
+}
+
+criarGraficos();
+
+document.getElementById('dateFilterForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let dataInicio = document.getElementById('data_inicio').value;
+    let dataFim = document.getElementById('data_fim').value;
+
+    let formData = new FormData();
+    formData.append('data_inicio', dataInicio);
+    formData.append('data_fim', dataFim);
+
+    fetch('/assets/php/atualizar_grafico.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(novosDados => {
+        dados = novosDados;
+        criarGraficos();
+    })
+    .catch(error => console.error('❌ Erro ao aplicar filtro de data:', error));
+});
+</script>
 
 <script>
-    document.getElementById('valor').addEventListener('input', function (e) {
-    let value = e.target.value;
-
-    // Remove tudo que não é número ou vírgula
-    value = value.replace(/\D/g, "");
-
-    // Converte para número e formata como moeda brasileira
-    value = (parseInt(value) / 100).toLocaleString("pt-BR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
-
+   document.getElementById('valor').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, ""); 
+    if (value) {
+        value = (parseInt(value) / 100).toLocaleString("pt-BR", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    } else {
+        value = "";
+    }
     e.target.value = value;
 });
 
 </script>
+<script>
+document.querySelector('.form1').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let formData = new FormData(this);
+
+    fetch('/assets/php/processa_dre.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        let popup = document.getElementById('popup');
+        popup.textContent = data.status === "success" ? "✅ Salvo com sucesso!" : "❌ " + data.message;
+        popup.className = "popup " + (data.status === "success" ? "success" : "error");
+        popup.style.display = 'block';
+
+        if (data.status === "success") {
+            setTimeout(() => {
+                popup.style.display = 'none';
+                location.reload();
+            }, 1000);
+        } else {
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    })
+    .catch(error => {
+        console.error("Erro na requisição:", error);
+    });
+});
+
+</script>
+
 </body>
 </html>
