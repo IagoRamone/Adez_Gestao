@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
-}
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
+require_once '../../backend/auth/session_check.php';
 ?> 
 
 <!DOCTYPE html>
@@ -50,7 +42,7 @@ $roleUsuario = $_SESSION['role'];
         <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
     </ul>
 
-    <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
+    <a class="sidemenu" href="/assets/backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -62,54 +54,67 @@ $roleUsuario = $_SESSION['role'];
         <br>
         <div id="cadastro" class="form-container">
             <h2>Cadastro de Novo Funcionário</h2>
-            <form action="/assets/php/cadastro.php" method="post" enctype="multipart/form-data">
-                <label for="name">Nome</label>
-                <input type="text" id="name" name="name" placeholder="Digite o nome" required>
-            
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Digite o email" required>
-            
-                <label for="cpf">CPF</label>
-                <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" required>
-            
-                <label for="dataNascimento">Data de Nascimento</label>
-                <input type="date" id="dataNascimento" name="dataNascimento" required>
-            
-                <label for="cep">CEP</label>
-                <input type="text" id="cep" name="cep" placeholder="Digite o CEP" required onblur="buscarCEP()">
-            
-                <label for="address">Endereço</label>
-                <input type="text" id="address" name="address" placeholder="Digite o endereço" required>
-            
-                <label for="phone">Telefone</label>
-                <input type="text" id="phone" name="phone" placeholder="Digite o telefone" required>
+            <form action="../../backend/bd/cadastro_user.php" method="post" enctype="multipart/form-data">
+    <label for="name">Nome</label>
+    <input type="text" id="name" name="name" placeholder="Digite o nome" required>
 
-                <label for="dataAdmissão">Data de admissão</label>
-                <input type="date" id="dataAdmissão" name="dataAdmissão" required>
-            
-                <label for="role">Cargo/Tipo</label>
-                <select id="role" name="role">
-                <option value="admin">Admin</option>
-                 <option value="RH">RH</option>
-                 <option value="Financeiro">Financeiro</option>
-                 <option value="Squad 1">Squad 1</option>
-                 <option value="Squad 2">Squad 2</option>
-                 <option value="Squad 3">Squad 3</option>
-                 <option value="Squad 4">Squad 4</option>
-                 <option value="Squad 5">Squad 5</option>
-                </select>
-                
-                <label for="pis">PIS</label>
-                <input type="text" id="pis" name="pis" placeholder="Digite o número do PIS" required>
-            
-                <label for="photo">Foto</label>
-                <input type="file" id="photo" name="photo" accept="image/*">
-                
-                <label for="anexo">Anexo</label>
-                <input type="file" id="anexo" name="anexo" accept="image/*"> 
-            
-                <button type="submit" id="btn">Cadastrar</button>
-            </form>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Digite o email" required>
+
+    <label for="cpf">CPF</label>
+    <input type="text" id="cpf" name="cpf" placeholder="Digite o CPF" required>
+
+    <label for="dataNascimento">Data de Nascimento</label>
+    <input type="date" id="dataNascimento" name="dataNascimento" required>
+
+    <label for="cep">CEP</label>
+    <input type="text" id="cep" name="cep" placeholder="Digite o CEP" required onblur="buscarCEP()">
+
+    <label for="address">Endereço</label>
+    <input type="text" id="address" name="address" placeholder="Digite o endereço" required>
+
+    <label for="phone">Telefone</label>
+    <input type="text" id="phone" name="phone" placeholder="Digite o telefone" required>
+
+    <label for="dataAdmissao">Data de admissão</label>
+    <input type="date" id="dataAdmissao" name="dataAdmissao" required>
+
+    <label for="role">Cargo/Tipo</label>
+    <select id="role" name="role">
+        <option value="admin">Admin</option>
+        <option value="RH">RH</option>
+        <option value="Financeiro">Financeiro</option>
+        <option value="Squad 1">Squad 1</option>
+        <option value="Squad 2">Squad 2</option>
+        <option value="Squad 3">Squad 3</option>
+        <option value="Squad 4">Squad 4</option>
+        <option value="Squad 5">Squad 5</option>
+    </select>
+
+    <label for="tipo_contrato">Tipo de Contrato</label>
+    <select id="tipo_contrato" name="tipo_contrato" onchange="calcularFerias()">
+        <option value="CLT">CLT</option>
+        <option value="PJ">PJ</option>
+        <option value="Estagiário">Estagiário</option>
+    </select>
+
+    <label for="salario">Salário</label>
+    <input type="text" id="salario" name="salario" placeholder="Digite o salário" required>
+
+    <label for="data_fim_contrato">Data de Término do Contrato (se aplicável)</label>
+    <input type="date" id="data_fim_contrato" name="data_fim_contrato">
+
+    <label for="ultimo_periodo_ferias">Último Período de Férias</label>
+    <input type="date" id="ultimo_periodo_ferias" name="ultimo_periodo_ferias" readonly>
+
+    <label for="photo">Foto</label>
+    <input type="file" id="photo" name="photo" accept="image/*">
+
+    <label for="anexo">Anexo</label>
+    <input type="file" id="anexo" name="anexo" accept="image/*"> 
+
+    <button type="submit" id="btn">Cadastrar</button>
+</form>
         </div>
     </div>
     <script src="/assets/js/script.js"></script>

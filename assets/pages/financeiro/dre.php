@@ -1,15 +1,6 @@
 <?php
-session_start();
-
-require_once '../../php/db_connection.php';
-
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
-}
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
+require_once '../../backend/auth/session_check.php';
+require_once '../../backend/bd/db_connection.php';
 
 $sql = "SELECT DATE(data_lancamento) as data, categoria, SUM(valor) as total FROM dre_lancamentos GROUP BY data, categoria ORDER BY data ASC";
 $result = $conn->query($sql);
@@ -65,7 +56,7 @@ $conn->close();
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
 
-    <a class="sidemenu" href="../php/logout.php">Logout</a>
+    <a class="sidemenu" href="/assets/backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -75,7 +66,7 @@ $conn->close();
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 
     <div class="content">
-        <form class="form1" action="/assets/php/processa_dre.php" method="POST">
+        <form class="form1" action="../../backend/query/processa_dre.php" method="POST">
             <label for="categoria">Categoria:</label>
             <select name="categoria" required>
                 <option value="Receita">Receita</option>
@@ -192,7 +183,7 @@ document.getElementById('dateFilterForm').addEventListener('submit', function (e
     formData.append('data_inicio', dataInicio);
     formData.append('data_fim', dataFim);
 
-    fetch('/assets/php/atualizar_grafico.php', {
+    fetch('../../backend/query/atualizar_grafico.php', {
         method: 'POST',
         body: formData
     })
@@ -254,6 +245,6 @@ document.querySelector('.form1').addEventListener('submit', function (event) {
 });
 
 </script>
-
+<script src="/assets/js/script.js"></script>
 </body>
 </html>

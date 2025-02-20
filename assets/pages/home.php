@@ -1,14 +1,27 @@
 <?php
-session_start();
+require_once '../backend/auth/session_check.php';
+require_once '../backend/bd/db_connection.php';
 
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
+if ($roleUsuario === 'admin' || $roleUsuario === 'rh') {
+    $hoje = date('Y-m-d');
+    $doisMesesAntes = date('Y-m-d', strtotime('-10 months', strtotime($hoje)));
+
+    $sqlFerias = "SELECT name, ultimo_periodo_ferias, DATE_ADD(ultimo_periodo_ferias, INTERVAL 12 MONTH) AS proximo_periodo_ferias 
+                  FROM funcionarios 
+                  WHERE tipo_contrato IN ('CLT', 'Estagiário') 
+                  AND ultimo_periodo_ferias <= '$doisMesesAntes'";
+
+    $resultFerias = $conn->query($sqlFerias);
+    $notificacoes = [];
+
+    if ($resultFerias->num_rows > 0) {
+        while ($row = $resultFerias->fetch_assoc()) {
+            $notificacoes[] = "O funcionário <b>{$row['name']}</b> deve tirar férias até <b>" . date('d/m/Y', strtotime($row['proximo_periodo_ferias'])) . "</b>.";
+        }
+    }
 }
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
-?> 
+?>
+ 
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -51,7 +64,7 @@ $roleUsuario = $_SESSION['role'];
         <li><a class="sidemenu" href="/assets/pages/financeiro/cliente.php">Clientes</a></li>
     </ul>
 
-    <a class="sidemenu" href="../php/logout.php">Logout</a>
+    <a class="sidemenu" href="../backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -59,9 +72,21 @@ $roleUsuario = $_SESSION['role'];
 </div>
 
 <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+<div id="notificacoes" class="notificacao-container"></div>
 
     <div class="content">
         <h1>Bem-vindo à Adez Gestão</h1>
+        <?php if (!empty($notificacoes)): ?>
+    <div class="notificacao-containerfe">
+        <h3>⚠️ Notificações Importantes</h3>
+        <ul>
+            <?php foreach ($notificacoes as $notificacao): ?>
+                <li class="notificacao-item"><?php echo $notificacao; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
         <br>
         <div class="dashboard-section">
             <h3>Resumo Geral</h3>
@@ -71,17 +96,6 @@ $roleUsuario = $_SESSION['role'];
     <h4>Total de Funcionários</h4>
     <p>
         <?php
-        $host = '127.0.0.1:3306';
-        $dbname = 'u561882274_adez_gestao';
-        $username = 'u561882274_Iagoramone';
-        $password = '/7Sn#;|#&*H';
-        
-        $conn = new mysqli($host, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Falha na conexão: " . $conn->connect_error);
-        }
-
         $sql = "SELECT COUNT(*) AS total FROM funcionarios";
         $result = $conn->query($sql);
 
@@ -144,5 +158,6 @@ $roleUsuario = $_SESSION['role'];
             }
         }
     </script>
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

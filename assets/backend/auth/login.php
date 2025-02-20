@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once './db_connection.php';
+require_once '../bd/db_connection.php';
 
 $error_message = ''; 
 

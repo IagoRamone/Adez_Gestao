@@ -1,13 +1,5 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
-}
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
+require_once '../../backend/auth/session_check.php';
 ?> 
 
 <!DOCTYPE html>
@@ -51,7 +43,7 @@ $roleUsuario = $_SESSION['role'];
         <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
     </ul>
 
-    <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
+    <a class="sidemenu" href="/assets/backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -63,7 +55,7 @@ $roleUsuario = $_SESSION['role'];
         <br>
         <div id="cadastro" class="form-container">
             <h2>Cadastro de Novo Cliente</h2>
-            <form action="/assets/php/cliente.php" method="post">
+            <form action="../../backend/bd/cad_cliente.php" method="post">
     
                 <label for="name" class="principal">Razão Social</label>
                 <input type="text" id="name" name="name" placeholder="Digite o nome" required>

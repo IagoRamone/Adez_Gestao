@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once './db_connection.php';
+require_once '../bd/db_connection.php';
 
 $id = intval($_GET['id'] ?? 0);
 
@@ -26,7 +26,10 @@ if ($result && $row = $result->fetch_assoc()) {
     echo "<p><strong>Telefone:</strong> " . htmlspecialchars($row['phone']) . "</p>";
     echo "<p><strong>Data de admissão:</strong> " . htmlspecialchars($row['data_admissao']) . "</p>";
     echo "<p><strong>Cargo/Tipo:</strong> " . htmlspecialchars($row['role']) . "</p>";
-    echo "<p><strong>PIS:</strong> " . htmlspecialchars($row['pis']) . "</p>";
+    echo "<p><strong>Tipo de contrato:</strong> " . htmlspecialchars($row['tipo_contrato']) . "</p>";
+    echo "<p><strong>Salário:</strong> " . htmlspecialchars($row['salario']) . "</p>";
+    echo "<p><strong>Fim do contrato</strong> " . htmlspecialchars($row['data_fim_contrato']) . "</p>";
+    echo "<p><strong>Último período para as férias:</strong> " . htmlspecialchars($row['ultimo_periodo_ferias']) . "</p>";
 } else {
     echo "<p>Funcionário não encontrado.</p>";
 }

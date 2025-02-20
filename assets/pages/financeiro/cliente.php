@@ -1,13 +1,6 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
-}
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
+require_once '../../backend/auth/session_check.php';
+require_once '../../backend/bd/db_connection.php';
 ?> 
 
 <!DOCTYPE html>
@@ -51,7 +44,7 @@ $roleUsuario = $_SESSION['role'];
         <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
     </ul>
 
-    <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
+    <a class="sidemenu" href="/assets/backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -61,7 +54,7 @@ $roleUsuario = $_SESSION['role'];
     <div class="content">
     <h1>Clientes</h1>
     <div id="search-container">
-        <form method="GET" action="/assets/php/search_clients.php">
+        <form method="GET" action="../../backend/query/search_clients.php">
             <div class="search-box">
                 <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
                 <input type="text" name="query" class="input-search" placeholder="Procurar" value="<?php echo htmlspecialchars($_GET['query'] ?? ''); ?>">
@@ -86,17 +79,6 @@ $roleUsuario = $_SESSION['role'];
                 </thead>
                 <tbody>
                     <?php
-                    $host = '127.0.0.1:3306';
-                    $dbname = 'u561882274_adez_gestao';
-                    $username = 'u561882274_Iagoramone';
-                    $password = '/7Sn#;|#&*H';
-
-                    $conn = new mysqli($host, $username, $password, $dbname);
-
-                    if ($conn->connect_error) {
-                        echo '<tr><td colspan="9">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
-                        exit;
-                    }
 
                     $sql = "SELECT razao_social, cnpj, responsavel, telefone, email, servicos, segmento, inicio_contrato, vigencia FROM cliente";
                     $result = $conn->query($sql);

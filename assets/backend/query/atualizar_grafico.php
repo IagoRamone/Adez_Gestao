@@ -1,5 +1,5 @@
 <?php
-require_once './db_connection.php';
+require_once '../bd/db_connection.php';
 
 $data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : null;
 $data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : null;

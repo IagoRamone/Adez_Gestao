@@ -1,13 +1,6 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['nome']) || !isset($_SESSION['role'])) {
-    header("Location: /index.php");
-    exit();
-}
-
-$nomeUsuario = $_SESSION['nome'];
-$roleUsuario = $_SESSION['role'];
+require_once '../../backend/auth/session_check.php';
+require_once '../../backend/bd/db_connection.php';
 ?> 
 
 <!DOCTYPE html>
@@ -140,7 +133,7 @@ $roleUsuario = $_SESSION['role'];
         <li><a class="sidemenu" href="/assets/pages/ti/equipamentos.php">Equipamentos</a></li>
     </ul>
 
-    <a class="sidemenu" href="/assets/php/logout.php">Logout</a>
+    <a class="sidemenu" href="/assets/backend/bd/logout.php">Logout</a>
 
     <div class="logged-user">
         <p id="user">Bem-vindo, <?php echo htmlspecialchars($nomeUsuario); ?>!</p>
@@ -170,22 +163,11 @@ $roleUsuario = $_SESSION['role'];
         </thead>
         <tbody>
             <?php
-            $host = '127.0.0.1:3306';
-            $dbname = 'u561882274_adez_gestao';
-            $username = 'u561882274_Iagoramone';
-            $password = '/7Sn#;|#&*H';
-
-            $conn = new mysqli($host, $username, $password, $dbname);
-
-            if ($conn->connect_error) {
-                echo '<tr><td colspan="5">Erro de conexão: ' . htmlspecialchars($conn->connect_error) . '</td></tr>';
-                exit;
-            }
 
             $query = $_GET['query'] ?? '';
             $query = $conn->real_escape_string(trim($query));
 
-            $sql = "SELECT * FROM funcionarios";
+            $sql = "SELECT * FROM funcionarios WHERE status = 'ativo'";
             if (!empty($query)) {
                 $sql .= " WHERE name LIKE '%$query%'";
             }
@@ -227,8 +209,9 @@ $roleUsuario = $_SESSION['role'];
 
         <div class="modal-footer">
             <button class="btn-close" onclick="closeModal()">Fechar</button>
-            <button class="btn-delete" onclick="deleteFuncionario()">Excluir Funcionário</button>
+            <button class="btn-inativo" onclick="inativarFuncionario()">Definir como Inativo</button>
         </div>
+
     </div>
 </div>
 
@@ -239,7 +222,7 @@ $roleUsuario = $_SESSION['role'];
     const modalPhoto = document.getElementById('modal-photo');
     modal.style.display = 'block';
 
-    fetch(`/assets/php/getFuncionarioDetails.php?id=${funcionarioId}`)
+    fetch(`/assets/backend/query/getFuncionarioDetails.php?id=${funcionarioId}`)
         .then(response => response.text())
         .then(data => {
     
@@ -265,27 +248,43 @@ $roleUsuario = $_SESSION['role'];
         modal.style.display = 'none';
     }
 
-    function deleteFuncionario() {
-        if (confirm('Tem certeza de que deseja excluir este funcionário?')) {
-            fetch(`/assets/php/deleteFuncionario.php?id=${funcionarioId}`, {
-                method: 'POST'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Funcionário excluído com sucesso!');
-                        location.reload();
-                    } else {
-                        alert('Erro ao excluir funcionário.');
-                    }
-                })
-                .catch(error => {
-                    alert('Erro de conexão com o servidor.');
-                });
-        }
+    function inativarFuncionario() {
+    if (confirm("Tem certeza de que deseja tornar este funcionário inativo?")) {
+        fetch(`/assets/backend/query/inativarFuncionario.php?id=${funcionarioId}`, {
+            method: "POST"
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Funcionário definido como inativo!");
+                location.reload();
+            } else {
+                alert("Erro ao inativar funcionário.");
+            }
+        })
+        .catch(error => {
+            alert("Erro de conexão com o servidor.");
+        });
     }
+}
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const dataFimContratoInput = document.getElementById("data_fim_contrato");
+
+    dataFimContratoInput.addEventListener("change", function () {
+        const dataFimContrato = new Date(this.value);
+        const hoje = new Date();
+        const doisDiasAntes = new Date(dataFimContrato);
+        doisDiasAntes.setDate(doisDiasAntes.getDate() - 2);
+
+        if (hoje >= doisDiasAntes && this.value) {
+            alert("⚠️ Atenção: O contrato deste funcionário está prestes a expirar!");
+        }
+    });
+});
+
 </script>
 
-
+<script src="/assets/js/main.js"></script>
 <script src="/assets/js/buscar.js"></script>
 <script src="/assets/js/filtrosugestao.js"></script>
 <script src="/assets/js/script.js"></script>

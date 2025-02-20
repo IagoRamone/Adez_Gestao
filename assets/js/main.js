@@ -52,3 +52,25 @@
     
 
 })(jQuery);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/backend/query/verifica_contratos.php')
+    .then(response => response.json())
+    .then(data => {
+        if (data.length > 0) {
+            let notificacoes = document.getElementById("notificacoes");
+            notificacoes.innerHTML = "<h3>Contratos Próximos do Vencimento</h3>";
+
+            data.forEach(contrato => {
+                let alerta = document.createElement("div");
+                alerta.classList.add("alerta");
+                alerta.innerHTML = `<strong>${contrato.razao_social}</strong>: vence em ${contrato.data_vencimento}`;
+                notificacoes.appendChild(alerta);
+            });
+
+            notificacoes.style.display = "block";
+        }
+    })
+    .catch(error => console.error("Erro ao buscar notificações:", error));
+});
