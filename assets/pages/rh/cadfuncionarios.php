@@ -101,17 +101,11 @@ require_once '../../backend/auth/session_check.php';
     <label for="salario">Salário</label>
     <input type="text" id="salario" name="salario" placeholder="Digite o salário" required>
 
-    <label for="data_fim_contrato">Data de Término do Contrato (se aplicável)</label>
+    <label for="data_fim_contrato">Data de Término do Contrato</label>
     <input type="date" id="data_fim_contrato" name="data_fim_contrato">
 
-    <label for="ultimo_periodo_ferias">Último Período de Férias</label>
-    <input type="date" id="ultimo_periodo_ferias" name="ultimo_periodo_ferias" readonly>
-
-    <label for="photo">Foto</label>
-    <input type="file" id="photo" name="photo" accept="image/*">
-
-    <label for="anexo">Anexo</label>
-    <input type="file" id="anexo" name="anexo" accept="image/*"> 
+    <label for="ultimo_periodo_ferias">Data limite de férias</label>
+    <input type="date" id="ultimo_periodo_ferias" name="ultimo_periodo_ferias">
 
     <button type="submit" id="btn">Cadastrar</button>
 </form>

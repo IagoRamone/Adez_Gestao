@@ -92,11 +92,11 @@ require_once '../../backend/auth/session_check.php';
                         <span class="checkmark"></span>
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" name="servicos[]" value="outros"> Consultoria
+                        <input type="checkbox" name="servicos[]" value="outros"> Consultoria Delivery
                         <span class="checkmark"></span>
                     </label>
                     <label class="checkbox-container">
-                        <input type="checkbox" name="servicos[]" value="outros"> GMS
+                        <input type="checkbox" name="servicos[]" value="outros"> Presença Digita
                         <span class="checkmark"></span>
                     </label>
                 </div>
@@ -119,7 +119,9 @@ require_once '../../backend/auth/session_check.php';
     
                 <label for="vigencia" class="principal">Vigência</label>
                 <select id="vigencia" name="vigencia" required>
+                    <option value="3">3 meses</option>
                     <option value="6">6 meses</option>
+                    <option value="8">8 meses</option>
                     <option value="12">12 meses</option>
                 </select>
     

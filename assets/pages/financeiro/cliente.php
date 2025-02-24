@@ -12,6 +12,83 @@ require_once '../../backend/bd/db_connection.php';
     <link rel="stylesheet" href="/assets/css/financeiro/cliente.css">
     <link rel="icon" href="/assets/img/Foguete amarelo.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        <style>
+        .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: black;
+    }
+
+    .modal-content {
+        background-color: #f9f9f9;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        width: 60%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .modal-header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .modal-body img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+    }
+
+    .modal-body .info {
+        text-align: left;
+        width: 100%;
+    }
+
+    .modal-body .info p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .btn-close {
+        background-color: #bbb;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    </style>
 </head>
 <body>
 <div class="sidebar" id="sidebar">
@@ -71,16 +148,13 @@ require_once '../../backend/bd/db_connection.php';
                         <th>Responsável</th>
                         <th>Telefone</th>
                         <th>Email</th>
-                        <th>Serviços</th>
-                        <th>Segmento</th>
-                        <th>Início do Contrato</th>
-                        <th>Vigência</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
 
-                    $sql = "SELECT razao_social, cnpj, responsavel, telefone, email, servicos, segmento, inicio_contrato, vigencia FROM cliente";
+                    $sql = "SELECT id,razao_social, cnpj, responsavel, telefone, email FROM cliente";
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -91,10 +165,7 @@ require_once '../../backend/bd/db_connection.php';
                             echo '<td>' . htmlspecialchars($row['responsavel']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['telefone']) . '</td>';
                             echo '<td>' . htmlspecialchars($row['email']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['servicos']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['segmento']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['inicio_contrato']) . '</td>';
-                            echo '<td>' . htmlspecialchars($row['vigencia']) . '</td>';
+                            echo '<td><button class="btn-info" onclick="showModal(' . $row['id'] . ')">Ver mais</button></td>';
                             echo '</tr>';
                         }
                     } else {
@@ -107,6 +178,52 @@ require_once '../../backend/bd/db_connection.php';
             </table>
         </div>
     </div>
+
+    <div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1>Detalhes do Funcionário</h1>
+        </div>
+
+        <div class="modal-body">
+            <div class="info" id="modal-body-info">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn-close" onclick="closeModal()">Fechar</button>
+        </div>
+
+    </div>
+</div>
+    <script>
+
+    function showModal(clienteId) {
+    const modal = document.getElementById('modal');
+    const modalBodyInfo = document.getElementById('modal-body-info');
+
+    modal.style.display = 'block'; 
+
+    fetch(`/assets/backend/query/getClientesDetails.php?id=${clienteId}`)
+        .then(response => response.text()) 
+        .then(data => {
+            const div = document.createElement('div');
+            div.innerHTML = data;
+            const info = div.querySelectorAll('p');
+            modalBodyInfo.innerHTML = '';
+            info.forEach(p => modalBodyInfo.appendChild(p));
+        })
+        .catch(error => {
+            modalBodyInfo.innerHTML = '<p>Erro ao carregar os detalhes.</p>';
+        });
+}
+
+    function closeModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'none';
+    }
+    </script>
+
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/buscarcliente.js"></script>
     <script src="/assets/js/filtrosugestao.js"></script>

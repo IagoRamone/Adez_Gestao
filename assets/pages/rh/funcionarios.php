@@ -88,7 +88,7 @@ require_once '../../backend/bd/db_connection.php';
         cursor: pointer;
     }
 
-    .btn-delete {
+    .btn-inativo {
         background-color: #e74c3c;
         color: white;
         border: none;
@@ -97,9 +97,22 @@ require_once '../../backend/bd/db_connection.php';
         cursor: pointer;
     }
 
-    .btn-delete:hover {
+    .btn-inativo:hover {
         background-color: #c0392b;
     }
+    .btn-alterar {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    .btn-alterar:hover {
+    background-color: #2980b9;
+    }
+
     </style>
 </head>
 <body>
@@ -210,6 +223,7 @@ require_once '../../backend/bd/db_connection.php';
         <div class="modal-footer">
             <button class="btn-close" onclick="closeModal()">Fechar</button>
             <button class="btn-inativo" onclick="inativarFuncionario()">Definir como Inativo</button>
+            <button class="btn-alterar" onclick="editarFuncionario()">Editar</button>
         </div>
 
     </div>
@@ -235,6 +249,8 @@ require_once '../../backend/bd/db_connection.php';
             modalPhoto.innerHTML = img ? img.outerHTML : '';
             modalBodyInfo.innerHTML = '';
             info.forEach(p => modalBodyInfo.appendChild(p));
+
+            modalBodyInfo.setAttribute("data-id", funcionarioId);
         })
         .catch(error => {
             modalPhoto.innerHTML = '<p>Erro ao carregar a foto.</p>';
@@ -280,7 +296,17 @@ require_once '../../backend/bd/db_connection.php';
             alert("⚠️ Atenção: O contrato deste funcionário está prestes a expirar!");
         }
     });
+
 });
+
+function editarFuncionario() {
+    const funcionarioId = document.getElementById("modal-body-info").getAttribute("data-id");
+    if (funcionarioId) {
+        window.location.href = `/assets/pages/rh/editarFuncionario.php?id=${funcionarioId}`;
+    } else {
+        alert("Erro: Funcionário não encontrado.");
+    }
+}
 
 </script>
 
